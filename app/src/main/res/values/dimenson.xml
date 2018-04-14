@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mgTimgV">150dp</dimen>
+    <dimen name="sizechu">15sp</dimen>
+    <dimen name="mgTbtnLogin">40dp</dimen>
+    <dimen name="sizeMrFood">22sp</dimen>
+    <dimen name="mgLxemtatca">200dp</dimen>
+    <dimen name="mgLxemthem">240dp</dimen>
+    <dimen name="sizexemthem">18sp</dimen>
+    <dimen name="sizenoidung">16sp</dimen>
+    <dimen name="mgLgio">210dp</dimen>
+    <dimen name="mgLmuangay">30dp</dimen>
+    <dimen name="sizetensp_giohang">30sp</dimen>
+    <dimen name="mgTchuan">10dp</dimen>
+    <dimen name="sizemember">22sp</dimen>
+</resources>

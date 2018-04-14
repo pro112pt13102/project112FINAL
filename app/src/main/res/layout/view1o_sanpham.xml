@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/imgV_hinhsp_sanpham"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/garan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_tensp_sanpham"
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:text="Gà rán"
+        android:textSize="15sp"
+        android:textColor="@color/tensp"
+        android:textStyle="bold"
+        android:layout_margin="5dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá :"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/maunen"/>
+        <TextView
+            android:id="@+id/tv_giasp_sanpham"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="45.000 VNĐ"
+            android:textColor="@color/maunen"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/btn_giohang_sanpham"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@drawable/btgiohanghiaaa"/>
+</LinearLayout>

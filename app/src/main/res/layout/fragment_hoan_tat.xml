@@ -1,0 +1,247 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.peter.project1.Fragment.HoanTatFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HOÀN TẤT ĐƠN HÀNG"
+                android:padding="10dp"
+                android:background="@color/border"
+                android:textColor="@color/noidung"/>
+
+            <View
+                android:layout_margin="10dp"
+                android:layout_width="350dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@color/border" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_giohang_fragment_hoan_tat"
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+            </android.support.v7.widget.RecyclerView>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="350dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@color/border" />
+
+            <View
+                android:layout_width="250dp"
+                android:layout_height="2dp"
+                android:background="@color/maunen"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="140dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng tiền :"
+                    android:textSize="@dimen/sizexemthem"
+                    android:textColor="@color/maunen"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_tongtien"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="72.000 VNĐ"
+                    android:textColor="@color/noidung"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sizenoidung"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="THÔNG TIN KHÁCH HÀNG"
+                android:background="@color/border"
+                android:textColor="@color/noidung"
+                android:padding="10dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Họ tên :"
+                    android:textSize="@dimen/sizexemthem"
+                    android:textColor="@color/noidung"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:id="@+id/tv_tenkhachhang_hoantat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trương Duy Kha"
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/noidung"
+                    android:textSize="@dimen/sizexemthem"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email :"
+                    android:textSize="@dimen/sizexemthem"
+                    android:textColor="@color/noidung"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:id="@+id/tv_email_hoantat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="tduykha0634@gmail.com"
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/noidung"
+                    android:textSize="@dimen/sizexemthem"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số điện thoại :"
+                    android:textSize="@dimen/sizexemthem"
+                    android:textColor="@color/noidung"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:id="@+id/tv_sdt_hoantat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01228088593"
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/noidung"
+                    android:textSize="@dimen/sizexemthem"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Địa chỉ giao hàng :"
+                    android:textSize="@dimen/sizexemthem"
+                    android:textColor="@color/noidung"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:id="@+id/tv_diachi_hoantat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="92 Hàm Tử"
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/noidung"
+                    android:textSize="@dimen/sizexemthem"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ghi chú :"
+                    android:textSize="@dimen/sizexemthem"
+                    android:textColor="@color/noidung"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"/>
+                <TextView
+                    android:id="@+id/tv_ghichu_hoantat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giao nhanh lên mấy thím..."
+                    android:layout_margin="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/noidung"
+                    android:textSize="@dimen/sizexemthem"/>
+            </LinearLayout>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="70dp"
+                    android:background="@color/border"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <Button
+                    android:textStyle="bold"
+                    android:textColor="#fffbfb"
+                    android:text="HOÀN TẤT"
+                    android:background="#f00"
+                    android:id="@+id/btn_hoantat"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.466"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+</FrameLayout>

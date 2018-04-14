@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.peter.project1.GioHangActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/maunen">
+
+        <ImageButton
+            android:id="@+id/img_btn_back_gio_hang"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/mauchu"
+            android:background="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Giỏ hàng"
+            android:textStyle="bold"
+            android:textColor="@color/mauchu"
+            android:textSize="@dimen/sizeMrFood"
+            android:gravity="center"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--add view1o_giohang vào list view nhé-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_giohang"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:visibility="invisible"
+                android:id="@+id/v_thanh_toan_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+
+                <View
+                    android:layout_width="250dp"
+                    android:layout_height="2dp"
+                    android:background="@color/maunen"
+                    android:layout_marginLeft="140dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="140dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tạm Tính :"
+                        android:textSize="@dimen/sizexemthem"
+                        android:textColor="@color/maunen"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tv_giasp_giohang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00.000 VNĐ"
+                        android:textColor="@color/noidung"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="@dimen/sizenoidung"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:visibility="invisible"
+                android:id="@+id/v_thanh_toan_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
+                    android:background="#f00"
+                    android:id="@+id/btn_thanh_toan"
+                    android:layout_width="380dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Thanh toán"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

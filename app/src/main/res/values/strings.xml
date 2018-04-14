@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MR.Food</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="emptyErrorString">Không được để trống</string>
+    <string name="API_GGmap_Key">AIzaSyCHg7HGttsfoEyAtg4XEgSZr5ECo6TK-ro</string>
+</resources>

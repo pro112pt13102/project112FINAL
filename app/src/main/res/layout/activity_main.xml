@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
+    tools:context=".LoginActivity">
+
+
+    <View
+        android:background="@drawable/logo"
+        android:id="@+id/imgV"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/mgTimgV"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="250dp"
+        android:layout_below="@+id/imgV_facebook"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp">
+
+        <TextView
+            android:id="@+id/tv_boqua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="22dp"
+            android:text="Bỏ qua >>"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="#a49b9b"
+            android:textSize="@dimen/sizechu" />
+
+        <View
+            android:layout_width="68dp"
+            android:layout_height="1dp"
+            android:background="#a49b9b"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgV_google"
+        android:layout_width="370dp"
+        android:layout_below="@+id/imgV"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/buttongg" />
+
+    <LinearLayout
+        android:id="@+id/layout_hoac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgV_google"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hoặc"
+            android:textColor="#a49b9b"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/imgV_google"
+            android:textSize="@dimen/sizechu"
+            android:id="@+id/tv_hoac" />
+
+        <View
+            android:layout_width="36.5dp"
+            android:layout_height="1dp"
+            android:background="#a49b9b"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgV_facebook"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/layout_hoac"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/buttonfb" />
+
+
+</RelativeLayout>

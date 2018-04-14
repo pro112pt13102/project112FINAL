@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.peter.project1.MuaNgayActivity">
+    <com.kofigyan.stateprogressbar.StateProgressBar
+        android:id="@+id/state_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:spb_currentStateNumber="one"
+        app:spb_stateSize="40dp"
+        app:spb_maxStateNumber="three"
+        app:spb_stateBackgroundColor="#c61233"
+        app:spb_stateForegroundColor="#e2cc24"
+        app:spb_stateNumberBackgroundColor="#deb73a"
+        app:spb_stateNumberForegroundColor="#d43a3a"
+        app:spb_currentStateDescriptionColor="#f91125"
+        app:spb_stateDescriptionColor="#efdc10"
+        app:spb_animateToCurrentProgressState="true"
+        app:spb_checkStateCompleted="true"/>
+    <com.example.peter.project1.CustomView.OneDirectionWipeViewpager
+        android:id="@+id/vp_mungay_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.example.peter.project1.CustomView.OneDirectionWipeViewpager>
+
+</LinearLayout>

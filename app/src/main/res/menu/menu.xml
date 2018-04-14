@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Món Ăn">
+        <menu>
+            <item
+                android:id="@+id/monchinh"
+                android:title="Món Chính"
+                android:icon="@drawable/ic_arrow_menu"/>
+            <item
+                android:id="@+id/monanvat"
+                android:title="Món Ăn Vặt"
+                android:icon="@drawable/ic_arrow_menu"/>
+            <item
+                android:id="@+id/comvanphong"
+                android:title="Cơm Văn Phòng"
+                android:icon="@drawable/ic_arrow_menu"/>
+        </menu>
+    </item>
+
+        <item android:title="Thức Uống">
+            <menu>
+                <item
+                    android:id="@+id/trasua"
+                    android:title="Trà Sữa"
+                    android:icon="@drawable/ic_arrow_menu"/>
+                <item
+                    android:id="@+id/cafe"
+                    android:title="Cafe"
+                    android:icon="@drawable/ic_arrow_menu"/>
+                <item
+                    android:id="@+id/khac"
+                    android:title="Các Loại Khác"
+                    android:icon="@drawable/ic_arrow_menu"/>
+            </menu>
+        </item>
+
+    <item android:title="Liên hệ" android:id="@+id/lienhe"/>
+    <item android:title="Giới Thiệu" android:id="@+id/gioithieu"/>
+    <item android:id="@+id/thoat" android:title="Thoát"/>
+
+</menu>

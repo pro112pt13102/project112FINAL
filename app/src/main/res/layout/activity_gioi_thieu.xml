@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.peter.project1.GioiThieuActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/maunen">
+
+        <ImageButton
+            android:id="@+id/img_btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/mauchu"
+            android:background="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Giới Thiệu"
+            android:textStyle="bold"
+            android:textColor="@color/mauchu"
+            android:textSize="@dimen/sizeMrFood"
+            android:gravity="center"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:background="@drawable/logo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nhóm 1"
+        android:layout_gravity="center"
+        android:textSize="@dimen/sizeMrFood"
+        android:textStyle="bold"
+        android:textColor="@color/maunen"/>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.Nguyễn Quốc Huy"
+        android:textStyle="bold"
+        android:textSize="@dimen/sizemember"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2.Vũ Minh Đạo"
+        android:textStyle="bold"
+        android:textSize="@dimen/sizemember"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3.Vương Trọng Thức"
+        android:textStyle="bold"
+        android:textSize="@dimen/sizemember"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4.Trương Duy Kha"
+        android:textStyle="bold"
+        android:textSize="@dimen/sizemember"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5.Trần Minh Sang"
+        android:textStyle="bold"
+        android:textSize="@dimen/sizemember"
+        android:layout_marginLeft="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6.Nguyễn Trọng Đức"
+        android:textStyle="bold"
+        android:textSize="@dimen/sizemember"
+        android:layout_marginLeft="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Version : 1.1.8"
+        android:textSize="@dimen/sizemember"
+        android:textColor="@color/tensp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"/>
+</LinearLayout>

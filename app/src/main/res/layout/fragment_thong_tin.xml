@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.peter.project1.Fragment.ThongTinFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.andreabaccega.widget.FormEditText
+            android:id="@+id/et_hoten_thongtin"
+            android:layout_width="350dp"
+            android:layout_height="55dp"
+            android:hint="Họ tên *"
+            app:emptyErrorString="@string/emptyErrorString"
+            android:background="@drawable/border"
+            android:backgroundTint="@color/border"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:padding="10dp"/>
+
+        <com.andreabaccega.widget.FormEditText
+            app:testType="numeric"
+            app:emptyErrorString="@string/emptyErrorString"
+            app:testErrorString="Số điện thoại má ơi"
+            android:id="@+id/et_sdt_thongtin"
+            android:layout_width="350dp"
+            android:layout_height="55dp"
+            android:hint="Số điện thoại liên hệ *"
+            android:background="@drawable/border"
+            android:backgroundTint="@color/border"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"/>
+
+        <com.andreabaccega.widget.FormEditText
+            app:emptyErrorString="@string/emptyErrorString"
+            app:testType="alpha"
+            app:testErrorString="Gồm số nhà và tên đượng"
+            android:id="@+id/et_diachi_thongtin"
+            android:layout_width="350dp"
+            android:layout_height="55dp"
+            android:hint="Địa chỉ giao hàng *"
+            android:background="@drawable/border"
+            android:backgroundTint="@color/border"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"/>
+
+        <com.andreabaccega.widget.FormEditText
+            app:emptyErrorString="@string/emptyErrorString"
+            app:testType="email"
+            app:testErrorString="Sai định dang Email"
+            android:id="@+id/et_email_thongtin"
+            android:layout_width="350dp"
+            android:layout_height="55dp"
+            android:hint="Email"
+            android:background="@drawable/border"
+            android:backgroundTint="@color/border"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/et_ghichu_thongtin"
+            android:layout_width="350dp"
+            android:layout_height="150dp"
+            android:hint="Thông tin ghi chú"
+            android:background="@drawable/border"
+            android:backgroundTint="@color/border"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:lines="20"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="70dp"
+                android:background="@color/border"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <Button
+                android:textStyle="bold"
+                android:textColor="#fffbfb"
+                android:text="TIẾP TỤC"
+                android:background="#f00"
+                android:id="@+id/btn_tiep_tuc_thong_tin"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.466"
+                app:layout_constraintStart_toStartOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</FrameLayout>

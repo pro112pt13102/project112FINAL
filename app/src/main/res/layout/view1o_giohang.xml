@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+        <View
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/border" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_hinhsp_giohang"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="#ff00"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_tensp_giohang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nước ép dưa hấu"
+                    android:textColor="@color/tensp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:textSize="20sp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="15dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Giá :"
+                        android:textSize="@dimen/sizexemthem"
+                        android:textColor="@color/tensp"
+                        android:textStyle="bold"
+                        android:layout_margin="5dp"/>
+                    <TextView
+                        android:id="@+id/tv_giasp_giohang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="36.000 VNĐ / ly"
+                        android:textColor="@color/maunen"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/sizexemthem"
+                        android:layout_margin="5dp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số lượng :"
+                android:textStyle="bold"
+                android:textColor="@color/tensp"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/sizexemthem"/>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/et_soluong_giohang"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/border"/>
+            <ImageView
+                android:id="@+id/img_xoa"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_delete"/>
+        </LinearLayout>
+        <View
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@color/border" />
+</LinearLayout>
