@@ -5,15 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -53,7 +55,9 @@ public class SanPhamActivity extends AppCompatActivity {
     int maSpDau;
     int sizeOfArrayrespone=1;
     int Madm;
+    int isEmpty=0;
     ArrayList<SanPham> arrayResponse;
+    mHandler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +68,10 @@ public class SanPhamActivity extends AppCompatActivity {
         setNumberBadge(CountSizeArray(arrayList_giohang));
 
         //set up recycleView
-//        adapter_rc_san_pham adapter_rc_san_pham = new adapter_rc_san_pham(arrayListSanPham,SanPhamActivity.this);
-//        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
-//        rc_san_pham.setLayoutManager(manager);
-//        rc_san_pham.setAdapter(adapter_rc_san_pham);
-//        rc_san_pham.setLayoutManager(new LinearLayoutManager(this));
-        rc_san_pham.setLayoutManager(new GridLayoutManager(SanPhamActivity.this,2));
+//        rc_san_pham.setLayoutManager(new GridLayoutManager(SanPhamActivity.this,2));
+        // Sữa lỗi java.lang.IndexOutOfBoundsException: Inconsistency detected. Invalid view holder adapter positionViewHolder
+        // https://stackoverflow.com/questions/31759171/recyclerview-and-java-lang-indexoutofboundsexception-inconsistency-detected-in
+        rc_san_pham.setLayoutManager(new WrapContentGridLayoutManager(SanPhamActivity.this,2));
         adapter = new adaoter_rc_san_pham(rc_san_pham, this, arrayListSanPham);
         rc_san_pham.setAdapter(adapter);
         pulldownToRefresh();
@@ -90,7 +92,8 @@ public class SanPhamActivity extends AppCompatActivity {
                 sendGioHangtoGiohangActivity();
             }
         });
-
+        //
+        mHandler =new mHandler();
 
     }
 
@@ -106,12 +109,8 @@ public class SanPhamActivity extends AppCompatActivity {
     }
 
     public void getDataSanPham() {
-//        for (int i = 0; i < 20; i++) {
-//            SanPham sp = new SanPham("sp" + i, 5 + i * 10,url, 1, i + 1);
-//            arrayListSanPham.add(sp);
-//        }
         // Set Title
-         title = getIntent().getStringExtra("LOAI");
+         title = getIntent().getStringExtra("LOAI").trim();
         txt_loai.setText(title);
         if(title.equalsIgnoreCase("Món chính")){
             arrayListSanPham= (ArrayList<SanPham>) getIntent().getSerializableExtra("DsMonChinh");
@@ -123,15 +122,15 @@ public class SanPhamActivity extends AppCompatActivity {
         }
         if(title.equalsIgnoreCase("Thức uống")){
             arrayListSanPham= (ArrayList<SanPham>) getIntent().getSerializableExtra("DsThucUong");
-            Madm=1;
+            Madm=3;
         }
-        if(title.equalsIgnoreCase("Khác")){
+        if(title.equalsIgnoreCase("Các Loại Khác")){
             arrayListSanPham= (ArrayList<SanPham>) getIntent().getSerializableExtra("ThucUong");
-            Madm=1;
+            Madm=3;
         }
         if(title.equalsIgnoreCase("Trà Sữa")){
             arrayListSanPham= (ArrayList<SanPham>) getIntent().getSerializableExtra("TraSua");
-            Madm=3;
+            Madm=1;
         }
         if(title.equalsIgnoreCase("Cafe")){
             arrayListSanPham= (ArrayList<SanPham>) getIntent().getSerializableExtra("Cafe");
@@ -144,7 +143,6 @@ public class SanPhamActivity extends AppCompatActivity {
         Collections.reverse(arrayListSanPham);
         maSPCuoi=arrayListSanPham.get(arrayListSanPham.size()-1).getMaSP();
         maSpDau=arrayListSanPham.get(0).getMaSP();
-//        Toast.makeText(this, ""+maSPCuoi, Toast.LENGTH_SHORT).show();
     }
 
     public void pulldownToRefresh() {
@@ -152,54 +150,20 @@ public class SanPhamActivity extends AppCompatActivity {
         swipe_refresh_layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                if (arrayListSanPham.size() <= 50) {
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(SanPhamActivity.this, "dang load", Toast.LENGTH_SHORT).show();
-////                            items.remove(items.size()-1);
-////                            adapter.notifyItemRemoved(items.size());
-//                            //Random more data
-//                            int index = arrayListSanPham.size();
-//                            int end = index + 10;
-//                            for (int i = 0; i < 10; i++) {
-////                                String name = UUID.randomUUID().toString();
-//                                SanPham sanpham = new SanPham("sp" + i, 5 + i * 10, url, 1, i + 1);
-//                                arrayListSanPham.add(i, sanpham);
-//                            }
-//                            adapter.notifyDataSetChanged();
-////                            adapter.setLoaded();
-//                            swipe_refresh_layout.setRefreshing(false);
-//                        }
-//                    }, 2000);
-//                } else {
-//                    Toast.makeText(SanPhamActivity.this, "Load data completed!", Toast.LENGTH_SHORT).show();
-//                    swipe_refresh_layout.setRefreshing(false);
-//                }
-//                if(title.equalsIgnoreCase("Món chính") || title.equalsIgnoreCase("Món Ăn Vặt")){
-//                    String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-co-ma-lon-hon&ma="+maSpDau+"&soluong=6";
-//                    PullDownloadDataDoAn(url);
-////                        Toast.makeText(SanPhamActivity.this, ""+maSPCuoi, Toast.LENGTH_SHORT).show();
-//                }
-//                if(title.equalsIgnoreCase("Thức uống")){
-//                    String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-co-ma-lon-hon&ma="+maSpDau+"&soluong=6";
-//                    PullDownloadDataDoUong(url);
-//                }
-                setUrlRequestPullDown();
-                Log.d("AAA",maSpDau+"");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-//                            Add more data
-                            for (int i = 0; i < arrayResponse.size(); i++) {
-                                arrayListSanPham.add(i, arrayResponse.get(i));
+                Thread t = new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        setUrlRequestPullDown();
+                        while (true){
+                            if(arrayResponse.size()!=0){
+                                mHandler.sendEmptyMessage(1);
+                                break;
                             }
-                            maSpDau=arrayListSanPham.get(0).getMaSP();
-                            adapter.notifyDataSetChanged();
-                            swipe_refresh_layout.setRefreshing(false);
                         }
-                    }, 2000);
-
+                    }
+                };
+                t.start();
 
             }
         });
@@ -209,69 +173,27 @@ public class SanPhamActivity extends AppCompatActivity {
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-//                if (arrayListSanPham.size() <= 50) {
-//                    arrayListSanPham.add(null);
-//                    arrayListSanPham.add(null);
-//                    adapter.notifyItemInserted(arrayListSanPham.size() - 2);
-//                    adapter.notifyItemInserted(arrayListSanPham.size() - 1);
-//                    new Handler().postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(SanPhamActivity.this, "dang load", Toast.LENGTH_SHORT).show();
-//                            arrayListSanPham.remove(arrayListSanPham.size() - 2);
-//                            arrayListSanPham.remove(arrayListSanPham.size() - 1);
-//                            adapter.notifyItemRemoved(arrayListSanPham.size());
-//                            //Random more data
-//                            int index = arrayListSanPham.size();
-//                            int end = index + 10;
-//                            for (int i = index; i < end; i++) {
-//                                SanPham sanpham = new SanPham("sp" + i, 5 + i * 10,url, 1, i + 1);
-//                                arrayListSanPham.add(i, sanpham);
-//                            }
-//                            adapter.notifyDataSetChanged();
-//                            adapter.setLoaded();
-//                        }
-//                    }, 2000);
-//                } else {
-//                    Toast.makeText(SanPhamActivity.this, "Load data completed!", Toast.LENGTH_SHORT).show();
-//                }
-                    if(sizeOfArrayrespone!=0){
+                Log.d("AAA","emty"+isEmpty+"Ma dm"+Madm);
+                    if(isEmpty!=-1){
                         arrayListSanPham.add(null);
                         arrayListSanPham.add(null);
                         adapter.notifyItemInserted(arrayListSanPham.size() - 2);
                         adapter.notifyItemInserted(arrayListSanPham.size() - 1);
-                        //
-//                        if(title.equalsIgnoreCase("Món chính") || title.equalsIgnoreCase("Món Ăn Vặt")){
-//                            String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-co-ma-nho-hon&ma="+maSPCuoi+"&soluong=6";
-//                            PullUploadDataDoAn(url);
-////                        Toast.makeText(SanPhamActivity.this, ""+maSPCuoi, Toast.LENGTH_SHORT).show();
-//                        }
-//                        if(title.equalsIgnoreCase("Thức uống")){
-//                            String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-co-ma-nho-hon&ma="+maSPCuoi+"&soluong=6";
-//                            PullUploadDataDoUong(url);
-//                        }
-                        //
-                        setUrlRequestPullUp();
-                        Log.d("111",maSPCuoi+"");
-                        new Handler().postDelayed(new Runnable() {
+                        Thread t = new Thread(){
                             @Override
                             public void run() {
-//                                Toast.makeText(SanPhamActivity.this, "dang load", Toast.LENGTH_SHORT).show();
-                                arrayListSanPham.remove(arrayListSanPham.size() - 2);
-                                arrayListSanPham.remove(arrayListSanPham.size() - 1);
-                                adapter.notifyItemRemoved(arrayListSanPham.size());
-//                               Add more data
-                                arrayListSanPham.addAll(arrayResponse);
-                                maSPCuoi=arrayListSanPham.get(arrayListSanPham.size()-1).getMaSP();
-                                adapter.notifyDataSetChanged();
-                                adapter.setLoaded();
+                                super.run();
+                                setUrlRequestPullUp();
+                                while (true){
+                                    if(arrayResponse.size()!=0){
+                                        mHandler.sendEmptyMessage(0);
+                                        break;
+                                    }
+                                }
                             }
-                        }, 3000);
-                    }else {
-//                        Toast.makeText(SanPhamActivity.this, "Hết rồi", Toast.LENGTH_SHORT).show();
+                        };
+                        t.start();
                     }
-
-
             }
         });
     }
@@ -376,23 +298,30 @@ public class SanPhamActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         // Process the JSON
-                        sizeOfArrayrespone=response.length();
+//                        sizeOfArrayrespone=response.length();
                         try{
                             // Loop through the array elements
                             arrayResponse.clear();
+                            SanPham monAn=null;
                             for(int i=0;i<response.length();i++){
                                 // Get current json object
                                 JSONObject MonAn = response.getJSONObject(i);
                                 // Get the current student (json object) data
                                 int MaMa = MonAn.getInt("MaMA");
-                                String TenMA = MonAn.getString("TenMA");
-                                String GioiThieu = MonAn.getString("GioiThieu");
-                                int Dongia= MonAn.getInt("Dongia");
-                                String Anh = MonAn.getString("Anh");
-                                int maDM = MonAn.getInt("MaDM");
-                                SanPham monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"DoAn");
+                                 if(MaMa==-1){
+                                    isEmpty=MaMa;
+                                     monAn = new SanPham("",0,"",0,MaMa,0,"","");
+                                 }if(MaMa!=-1){
+                                    String TenMA = MonAn.getString("TenMA");
+                                    String GioiThieu = MonAn.getString("GioiThieu");
+                                    int Dongia= MonAn.getInt("Dongia");
+                                    String Anh = MonAn.getString("Anh");
+                                    int maDM = MonAn.getInt("MaDM");
+                                   monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"DoAn");
+                                }
 
                                 arrayResponse.add(monAn);
+
 
                             }
                         }catch (JSONException e){
@@ -425,24 +354,27 @@ public class SanPhamActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         // Process the JSON
-                        sizeOfArrayrespone=response.length();
                         arrayResponse.clear();
                         try{
+                            SanPham monAn=null;
                             // Loop through the array elements
                             for(int i=0;i<response.length();i++){
                                 // Get current json object
                                 JSONObject MonAn = response.getJSONObject(i);
                                 // Get the current student (json object) data
                                 int MaMa = MonAn.getInt("MaDU");
-                                String TenMA = MonAn.getString("TenDU");
-                                String GioiThieu = MonAn.getString("GioiThieu");
-                                int Dongia= MonAn.getInt("Dongia");
-                                String Anh = MonAn.getString("Anh");
-                                int maDM = MonAn.getInt("MaDM");
-                                SanPham monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"NuocUong");
-
+                               if (MaMa==-1){
+                                    isEmpty=MaMa;
+                                   monAn = new SanPham("",0,"",0,MaMa,0,"","");
+                                }if (MaMa!=-1){
+                                    String TenMA = MonAn.getString("TenDU");
+                                    String GioiThieu = MonAn.getString("GioiThieu");
+                                    int Dongia= MonAn.getInt("Dongia");
+                                    String Anh = MonAn.getString("Anh");
+                                    int maDM = MonAn.getInt("MaDM");
+                                     monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"NuocUong");
+                                }
                                 arrayResponse.add(monAn);
-
                             }
 
                         }catch (JSONException e){
@@ -477,6 +409,7 @@ public class SanPhamActivity extends AppCompatActivity {
                         // Process the JSON
                         arrayResponse.clear();
                         try{
+                            SanPham monAn = null;
                             // Loop through the array elements
                             arrayResponse.clear();
                             for(int i=0;i<response.length();i++){
@@ -484,12 +417,17 @@ public class SanPhamActivity extends AppCompatActivity {
                                 JSONObject MonAn = response.getJSONObject(i);
                                 // Get the current student (json object) data
                                 int MaMa = MonAn.getInt("MaMA");
-                                String TenMA = MonAn.getString("TenMA");
-                                String GioiThieu = MonAn.getString("GioiThieu");
-                                int Dongia= MonAn.getInt("Dongia");
-                                String Anh = MonAn.getString("Anh");
-                                int maDM = MonAn.getInt("MaDM");
-                                SanPham monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"DoAn");
+                                if(MaMa==-1){
+                                    monAn = new SanPham("",0,"",0,MaMa,0,"","");
+                                }if(MaMa!=-1){
+                                    String TenMA = MonAn.getString("TenMA");
+                                    String GioiThieu = MonAn.getString("GioiThieu");
+                                    int Dongia= MonAn.getInt("Dongia");
+                                    String Anh = MonAn.getString("Anh");
+                                    int maDM = MonAn.getInt("MaDM");
+                                     monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"DoAn");
+                                }
+
 
                                 arrayResponse.add(monAn);
 
@@ -527,18 +465,24 @@ public class SanPhamActivity extends AppCompatActivity {
                         // Process the JSON
                         arrayResponse.clear();
                         try{
+                            SanPham monAn = null;
                             // Loop through the array elements
                             for(int i=0;i<response.length();i++){
                                 // Get current json object
                                 JSONObject MonAn = response.getJSONObject(i);
                                 // Get the current student (json object) data
                                 int MaMa = MonAn.getInt("MaDU");
-                                String TenMA = MonAn.getString("TenDU");
-                                String GioiThieu = MonAn.getString("GioiThieu");
-                                int Dongia= MonAn.getInt("Dongia");
-                                String Anh = MonAn.getString("Anh");
-                                int maDM = MonAn.getInt("MaDM");
-                                SanPham monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"NuocUong");
+                                if(MaMa ==-1){
+                                     monAn = new SanPham("",0,"",0,MaMa,0,"","");
+
+                                }if(MaMa !=-1){
+                                    String TenMA = MonAn.getString("TenDU");
+                                    String GioiThieu = MonAn.getString("GioiThieu");
+                                    int Dongia= MonAn.getInt("Dongia");
+                                    String Anh = MonAn.getString("Anh");
+                                    int maDM = MonAn.getInt("MaDM");
+                                     monAn = new SanPham(TenMA,Dongia,Anh,1,MaMa,maDM,GioiThieu,"NuocUong");
+                                }
 
                                 arrayResponse.add(monAn);
 
@@ -567,7 +511,7 @@ public class SanPhamActivity extends AppCompatActivity {
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai-co-ma-nho-hon&maloai="+Madm+"&ma="+maSPCuoi+"&soluong=6";
             PullUploadDataDoAn(url);
         }
-        if(title.equalsIgnoreCase("Thức uống")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")){
+        if(title.equalsIgnoreCase("Các Loại Khác")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")){
 //            String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-co-ma-nho-hon&ma="+maSPCuoi+"&soluong=6";
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai-co-ma-nho-hon&maloai="+Madm+"&ma="+maSPCuoi+"&soluong=6";
 
@@ -579,7 +523,7 @@ public class SanPhamActivity extends AppCompatActivity {
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai-co-ma-lon-hon&maloai="+Madm+"&ma="+maSpDau+"&soluong=6";
             PullDownloadDataDoAn(url);
         }
-        if(title.equalsIgnoreCase("Thức uống")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")){
+        if(title.equalsIgnoreCase("Các Loại Khác")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")){
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai-co-ma-lon-hon&maloai="+Madm+"&ma="+maSpDau+"&soluong=6";
 
             PullDownloadDataDoUong(url);
@@ -591,6 +535,35 @@ public class SanPhamActivity extends AppCompatActivity {
 
     public void searchView(){
 
+    }
+    public  class mHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    arrayListSanPham.remove(arrayListSanPham.size() - 2);
+                    arrayListSanPham.remove(arrayListSanPham.size() - 1);
+                    adapter.notifyItemRemoved(arrayListSanPham.size());
+//                               Add more data
+                    if(arrayResponse.get(0).getMaSP()!=-1){
+                        arrayListSanPham.addAll(arrayResponse);
+                        maSPCuoi=arrayListSanPham.get(arrayListSanPham.size()-1).getMaSP();
+                        adapter.notifyDataSetChanged();
+                    }
+                    adapter.setLoaded();
+                case 1:
+//                        Add more data
+                    if(arrayResponse.get(0).getMaSP()!=-1){
+                        for (int i = 0; i < arrayResponse.size(); i++) {
+                            arrayListSanPham.add(i, arrayResponse.get(i));
+                        }
+                        maSpDau=arrayListSanPham.get(0).getMaSP();
+                        adapter.notifyDataSetChanged();
+                    }
+                    swipe_refresh_layout.setRefreshing(false);
+            }
+        }
     }
 }
 

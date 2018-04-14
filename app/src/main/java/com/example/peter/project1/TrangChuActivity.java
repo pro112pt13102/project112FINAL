@@ -182,7 +182,7 @@ public class TrangChuActivity extends AppCompatActivity {
                         break;
                     case R.id.khac:
                         Intent i5 = new Intent(TrangChuActivity.this,SanPhamActivity.class);
-                        i5.putExtra("LOAI","Khác");
+                        i5.putExtra("LOAI","Các Loại Khác");
                         i5.putExtra("ThucUong",arrayListThucUong);
                         startActivity(i5);
                         break;

@@ -52,27 +52,38 @@ public class LoadingScreenActivity extends AppCompatActivity {
             public void run() {
                 super.run();
                 try {
+                    sleep(0);
                     while (true){
-                        sleep(2000);
                         if (arrayListMonChinh.size()!=0 && arrayListMonAnVat.size()!=0 && arrayListThucUong.size()!=0 &&arrayListComVanPhong.size()!=0&& arrayListCafe.size()!=0 && arrayListTraSua.size()!=0 && arrayListSanPhamSlideShow.size()!=0){
+                            Intent i = new Intent(LoadingScreenActivity.this,
+                                    TrangChuActivity.class);
+                            i.putExtra("MonChinh",arrayListMonChinh);
+                            i.putExtra("MonVat",arrayListMonAnVat);
+                            i.putExtra("ThucUong",arrayListThucUong);
+                            i.putExtra("SlideShow",arrayListSanPhamSlideShow);
+                            i.putExtra("ComVanPhong",arrayListComVanPhong);
+                            i.putExtra("Cafe",arrayListCafe);
+                            i.putExtra("TraSua",arrayListTraSua);
+                            startActivity(i);
+                            finish();
                             break;
                         }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    Log.d("eee",arrayListSanPhamSlideShow.size()+"");
-                    Intent i = new Intent(LoadingScreenActivity.this,
-                            TrangChuActivity.class);
-                    i.putExtra("MonChinh",arrayListMonChinh);
-                    i.putExtra("MonVat",arrayListMonAnVat);
-                    i.putExtra("ThucUong",arrayListThucUong);
-                    i.putExtra("SlideShow",arrayListSanPhamSlideShow);
-                    i.putExtra("ComVanPhong",arrayListComVanPhong);
-                    i.putExtra("Cafe",arrayListCafe);
-                    i.putExtra("TraSua",arrayListTraSua);
-                    startActivity(i);
-                    finish();
+//                    Log.d("eee",arrayListSanPhamSlideShow.size()+"");
+//                    Intent i = new Intent(LoadingScreenActivity.this,
+//                            TrangChuActivity.class);
+//                    i.putExtra("MonChinh",arrayListMonChinh);
+//                    i.putExtra("MonVat",arrayListMonAnVat);
+//                    i.putExtra("ThucUong",arrayListThucUong);
+//                    i.putExtra("SlideShow",arrayListSanPhamSlideShow);
+//                    i.putExtra("ComVanPhong",arrayListComVanPhong);
+//                    i.putExtra("Cafe",arrayListCafe);
+//                    i.putExtra("TraSua",arrayListTraSua);
+//                    startActivity(i);
+//                    finish();
                 }
             }
         };
@@ -152,11 +163,13 @@ public class LoadingScreenActivity extends AppCompatActivity {
             loadDataDoAn(url2,arrayListMonAnVat);
             try {
                 while (true){
-                    Thread.sleep(1500);
+//                    Thread.sleep(1500);
                     if(arrayListMonChinh.size()!=0 && arrayListComVanPhong.size()!=0 && arrayListMonAnVat.size()!=0){
                         arrayListSanPhamSlideShow.add(arrayListMonChinh.get(arrayListMonChinh.size()-1));
                         arrayListSanPhamSlideShow.add(arrayListMonAnVat.get(arrayListMonAnVat.size()-1));
                         arrayListSanPhamSlideShow.add(arrayListComVanPhong.get(arrayListComVanPhong.size()-1));
+                        Log.d("eee",arrayListSanPhamSlideShow.size()+"");
+
                         break;
                     }
                 }
@@ -181,11 +194,12 @@ public class LoadingScreenActivity extends AppCompatActivity {
             loadDataDoUong(url2,arrayListTraSua);
             try {
                 while (true){
-                    Thread.sleep(1500);
+//                    Thread.sleep(1500);
                     if(arrayListThucUong.size()!=0 && arrayListCafe.size()!=0 && arrayListTraSua.size()!=0){
                         arrayListSanPhamSlideShow.add(arrayListCafe.get(arrayListCafe.size()-1));
                         arrayListSanPhamSlideShow.add(arrayListTraSua.get(arrayListTraSua.size()-1));
                         arrayListSanPhamSlideShow.add(arrayListThucUong.get(arrayListThucUong.size()-1));
+                        Log.d("eee",arrayListSanPhamSlideShow.size()+"");
                         break;
                     }
                 }
