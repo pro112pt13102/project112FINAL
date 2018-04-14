@@ -3,8 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="itemCheckTrue">#388b12</color>
-    <color name="itemCheckFalse">#e7ea33</color>
+    <color name="itemCheckTrue">#ffffff</color>
+    <color name="itemCheckFalse">#fa280e</color>
     <color name="maunen">#fa280e</color>
     <color name="mauchu">#ffffff</color>
     <color name="border">#e2e2e2</color>

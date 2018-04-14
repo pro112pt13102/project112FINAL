@@ -67,6 +67,7 @@ public class SanPhamActivity extends AppCompatActivity {
         loadGioHang();
         setNumberBadge(CountSizeArray(arrayList_giohang));
 
+
         //set up recycleView
 //        rc_san_pham.setLayoutManager(new GridLayoutManager(SanPhamActivity.this,2));
         // Sữa lỗi java.lang.IndexOutOfBoundsException: Inconsistency detected. Invalid view holder adapter positionViewHolder
