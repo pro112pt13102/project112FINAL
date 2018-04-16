@@ -85,8 +85,7 @@
             android:layout_marginLeft="10dp">
 
         </View>
-        <EditText
-            android:inputType="number"
+        <TextView
             android:id="@+id/et_soluong_giohang"
             android:layout_width="100dp"
             android:layout_height="40dp"

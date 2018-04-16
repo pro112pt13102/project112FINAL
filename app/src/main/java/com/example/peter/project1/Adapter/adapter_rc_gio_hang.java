@@ -28,7 +28,6 @@ import static android.support.v4.content.ContextCompat.startActivity;
 import static com.example.peter.project1.GioHangActivity.showHideThanhToan;
 import static com.example.peter.project1.GioHangActivity.tinhtong;
 import static com.example.peter.project1.GioHangActivity.updateArraylistgiohang;
-import static com.example.peter.project1.GioHangActivity.updatePositionEditItem;
 
 /**
  * Created by daovip on 3/27/2018.
@@ -39,7 +38,7 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
     Context c;
    Activity activity;
     static String chuoiEdit="";
-    int count =1;
+    int count=0;
     public adapter_rc_gio_hang(ArrayList<SanPham> arrayList, Context c, Activity activity) {
         this.arrayList = arrayList;
         this.c=c;
@@ -62,19 +61,22 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         final String hinhSp=arrayList.get(position).getHinh();
         final int soluong=arrayList.get(position).getSoluong();
         final int MaSp=arrayList.get(position).getMaSP();
-        final SanPham sp = new SanPham(tenSp,giaSp,hinhSp,soluong,MaSp);
-        count=soluong;
+        final String Loaisp=arrayList.get(position).getLoai();
+        final int Madm=arrayList.get(position).getMaDm();
+        final String Gioithieu=arrayList.get(position).getGioithieu();
+//        final SanPham sp = new SanPham(tenSp,giaSp,hinhSp,soluong,MaSp,Loaisp);
+        final SanPham sp = new SanPham(tenSp,giaSp,hinhSp,soluong,MaSp,Madm,Gioithieu,Loaisp);
         holder.et_soluong_giohang.setText(soluong+"");
         holder.tv_giasp_giohang.setText(giaSp+"");
         holder.tv_tensp_giohang.setText(tenSp);
-//        holder.img_hinhsp_giohang.setImageResource(hinhSp);
         loadhinh(holder.img_hinhsp_giohang,hinhSp);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(c,ChiTietActivity.class);
-                i.putExtra("SanPham",sp);
-                startActivity(c,i,null);
+//                Intent i = new Intent(c,ChiTietActivity.class);
+//                i.putExtra("SanPham",sp);
+//                startActivity(c,i,null);
+                Toast.makeText(c, ""+Loaisp, Toast.LENGTH_SHORT).show();
             }
         });
         //
@@ -83,49 +85,6 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
             public void onClick(View view) {
                 // Check Xoa  sản phẩm
                 AlertDialogError(position);
-//                if(isXoa==true){
-//                    arrayList.remove(position);
-//                    // updateArraylist to GioHangActivity
-//                    updateArraylistgiohang(arrayList);
-//                    tinhtong();
-//                    showHideThanhToan(arrayList.size());
-//                    notifyDataSetChanged();
-//                }else {
-//                    Toast.makeText(c, ""+isXoa, Toast.LENGTH_SHORT).show();
-//                }
-
-            }
-        });
-        // set forcusable editext
-        holder.et_soluong_giohang.setFocusable(false);
-        //
-        holder.et_soluong_giohang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // set forcusable true when click
-                v.setFocusableInTouchMode(true);
-                v.setFocusable(true);
-                updatePositionEditItem(position);
-            }
-        });
-        holder.et_soluong_giohang.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                System.out.println("ONtext changed " + new String(charSequence.toString()));
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                System.out.println("beforeTextChanged " + new String(charSequence.toString()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                System.out.println("afterTextChanged " + new String(editable.toString()));
-                chuoiEdit=editable.toString();
-                if(chuoiEdit.trim().length()!=0){
-                    count=Integer.parseInt(chuoiEdit);
-                }
 
             }
         });
@@ -134,15 +93,19 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         holder.viewTang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count ++;
-                holder.et_soluong_giohang.setText(count+"");
-                arrayList.get(position).setSoluong(count);
+                int count=arrayList.get(position).getSoluong();
+                    count ++;
+                    holder.et_soluong_giohang.setText(count+"");
+                    arrayList.get(position).setSoluong(count);
+
+
             }
         });
         // Giảm sản phẩm
         holder.viewGiam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int count =arrayList.get(position).getSoluong();
                 if(count>1){
                     count--;
                     holder.et_soluong_giohang.setText(count+"");
@@ -159,8 +122,7 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
 
     public class View1SanPham extends RecyclerView.ViewHolder{
         public ImageView img_hinhsp_giohang,img_xoa_giohang;
-        public TextView tv_tensp_giohang,tv_giasp_giohang;
-        public EditText et_soluong_giohang;
+        public TextView tv_tensp_giohang,tv_giasp_giohang,et_soluong_giohang;;
         public View viewTang,viewGiam;
 
         public View1SanPham(View itemView) {
@@ -218,4 +180,5 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         // show it
         alertDialog.show();
     }
+
 }

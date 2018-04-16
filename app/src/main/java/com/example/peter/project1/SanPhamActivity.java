@@ -174,7 +174,6 @@ public class SanPhamActivity extends AppCompatActivity {
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-                Log.d("AAA","emty"+isEmpty+"Ma dm"+Madm);
                     if(isEmpty!=-1){
                         arrayListSanPham.add(null);
                         arrayListSanPham.add(null);
