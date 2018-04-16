@@ -48,7 +48,7 @@ public class adapter_rc_horizontalview extends RecyclerView.Adapter<adapter_rc_h
                 startActivity(c,i,null);
             }
         });
-        holder.tv_tensp.setText(arrayList.get(position).getTenSanPha());
+        holder.tv_tensp.setText(LongNameWithDot(arrayList.get(position).getTenSanPha()));
         holder.tv_giasp.setText(arrayList.get(position).getDongia()+"");
     }
 
@@ -74,5 +74,12 @@ public class adapter_rc_horizontalview extends RecyclerView.Adapter<adapter_rc_h
                 .resize(200,200)
                 .into(img);
 
+    }
+    public String LongNameWithDot(String tenSp){
+        if(tenSp.trim().length()>18){
+            String aferCutsString=tenSp.substring(0,15)+"...";
+            tenSp=aferCutsString;
+        }
+        return tenSp;
     }
 }

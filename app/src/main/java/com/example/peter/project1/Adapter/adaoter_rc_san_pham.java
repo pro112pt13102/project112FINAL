@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,11 +121,13 @@ public class adaoter_rc_san_pham extends RecyclerView.Adapter<RecyclerView.ViewH
         if(holder instanceof ItemViewHolder){
             final SanPham sp;
              sp = arrayList.get(position);
-            final String tenSp =sp.getTenSanPha();
+             String tenSp =sp.getTenSanPha();
+             //
+            //
              int giaSp=sp.getDongia();
              String hinhSp=sp.getHinh();
             ((ItemViewHolder) holder).txt_gia.setText(giaSp+"");
-            ((ItemViewHolder) holder).txt_ten.setText(tenSp);
+            ((ItemViewHolder) holder).txt_ten.setText(LongNameWithDot(tenSp));
             //load hinh
 //            ((ItemViewHolder) holder).img.setImageResource(R.drawable.garan);
             loadhinh(((ItemViewHolder) holder).img,arrayList.get(position).getHinh());
@@ -173,11 +176,20 @@ public class adaoter_rc_san_pham extends RecyclerView.Adapter<RecyclerView.ViewH
         isLoading = false;
     }
     public void loadhinh(ImageView img ,String hinh){
+        String url="https://drive.google.com/uc?id=1FtZdHDo2O58feOotQPNYtqcDMZOthaSU";
+        String url1="http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh;
         Picasso.get()
-                .load("http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh)
+                .load(url1)
                 .centerCrop()
                 .resize(200,200)
                 .into(img);
+    }
+    public String LongNameWithDot(String tenSp){
+        if(tenSp.trim().length()>18){
+            String aferCutsString=tenSp.substring(0,15)+"...";
+            tenSp=aferCutsString;
+        }
+        return tenSp;
     }
 
 }
