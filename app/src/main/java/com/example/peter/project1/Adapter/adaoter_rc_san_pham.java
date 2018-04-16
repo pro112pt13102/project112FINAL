@@ -137,9 +137,6 @@ public class adaoter_rc_san_pham extends RecyclerView.Adapter<RecyclerView.ViewH
                     Intent i = new Intent(activity.getApplicationContext(),ChiTietActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("SanPham",sp);
-
-                    Toast.makeText(activity, ""+sp.getMaSP(), Toast.LENGTH_SHORT).show();
-
                     startActivity(activity.getApplicationContext(),i,null);
                 }
             });

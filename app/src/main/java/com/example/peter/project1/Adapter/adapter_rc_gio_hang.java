@@ -1,7 +1,9 @@
 package com.example.peter.project1.Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -12,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.peter.project1.ChiTietActivity;
+import com.example.peter.project1.GioHangActivity;
 import com.example.peter.project1.Model.SanPham;
 import com.example.peter.project1.R;
 import com.squareup.picasso.Picasso;
@@ -35,6 +39,7 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
     Context c;
    Activity activity;
     static String chuoiEdit="";
+    int count =0;
     public adapter_rc_gio_hang(ArrayList<SanPham> arrayList, Context c, Activity activity) {
         this.arrayList = arrayList;
         this.c=c;
@@ -58,6 +63,7 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         final int soluong=arrayList.get(position).getSoluong();
         final int MaSp=arrayList.get(position).getMaSP();
         final SanPham sp = new SanPham(tenSp,giaSp,hinhSp,soluong,MaSp);
+        count=soluong;
         holder.et_soluong_giohang.setText(soluong+"");
         holder.tv_giasp_giohang.setText(giaSp+"");
         holder.tv_tensp_giohang.setText(tenSp);
@@ -75,12 +81,19 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         holder.img_xoa_giohang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                arrayList.remove(position);
-                // updateArraylist to GioHangActivity
-                updateArraylistgiohang(arrayList);
-                tinhtong();
-                showHideThanhToan(arrayList.size());
-                notifyDataSetChanged();
+                // Check Xoa  sản phẩm
+                AlertDialogError(position);
+//                if(isXoa==true){
+//                    arrayList.remove(position);
+//                    // updateArraylist to GioHangActivity
+//                    updateArraylistgiohang(arrayList);
+//                    tinhtong();
+//                    showHideThanhToan(arrayList.size());
+//                    notifyDataSetChanged();
+//                }else {
+//                    Toast.makeText(c, ""+isXoa, Toast.LENGTH_SHORT).show();
+//                }
+
             }
         });
         // set forcusable editext
@@ -112,7 +125,27 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
                 chuoiEdit=editable.toString();
             }
         });
-
+        //  tăng giảm sản phẩm
+        // Tang sản phẩm
+        holder.viewTang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count ++;
+                holder.et_soluong_giohang.setText(count+"");
+                arrayList.get(position).setSoluong(count);
+            }
+        });
+        // Giảm sản phẩm
+        holder.viewGiam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(count>1){
+                    count--;
+                    holder.et_soluong_giohang.setText(count+"");
+                    arrayList.get(position).setSoluong(count);
+                }
+            }
+        });
     }
 
     @Override
@@ -124,6 +157,8 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         public ImageView img_hinhsp_giohang,img_xoa_giohang;
         public TextView tv_tensp_giohang,tv_giasp_giohang;
         public EditText et_soluong_giohang;
+        public View viewTang,viewGiam;
+
         public View1SanPham(View itemView) {
             super(itemView);
             et_soluong_giohang=itemView.findViewById(R.id.et_soluong_giohang);
@@ -131,6 +166,8 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
             tv_tensp_giohang=itemView.findViewById(R.id.tv_tensp_giohang);
             tv_giasp_giohang=itemView.findViewById(R.id.tv_giasp_giohang);
             img_xoa_giohang=itemView.findViewById(R.id.img_xoa);
+            viewGiam=itemView.findViewById(R.id.viewGiam);
+            viewTang=itemView.findViewById(R.id.viewTang);
         }
     }
 
@@ -143,5 +180,38 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
                 .centerCrop()
                 .resize(200,200)
                 .into(img);
+    }
+    public void AlertDialogError(final int position){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                activity);
+
+        // set title
+        alertDialogBuilder.setTitle("Thông báo");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Bạn có chắc chắn muốn xóa?")
+                .setCancelable(false)
+                .setPositiveButton("Đồng ý",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        arrayList.remove(position);
+                        // updateArraylist to GioHangActivity
+                        updateArraylistgiohang(arrayList);
+                        tinhtong();
+                        showHideThanhToan(arrayList.size());
+                        notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("Hủy bỏ",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }

@@ -51,24 +51,16 @@ public class ChiTietActivity extends AppCompatActivity {
     ArrayList<SanPham> arrayListSpTuongTu;
     int key=0;
     RecyclerView rc_horizontal_chitiet;
-    Handler handler;
     Thread t;
+    mHandler mHandler;
+    boolean isAdd=true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet);
         Anhxa();
         getData1Sanpham();
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
-                    case 0:
-                            setUpRcHorizontal();
-                }
-            }
-        };
+        mHandler =new mHandler();
         // load Data
          t=new Thread(){
             @Override
@@ -85,7 +77,7 @@ public class ChiTietActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }finally {
-                    handler.sendEmptyMessage(0);
+                    mHandler.sendEmptyMessage(0);
                 }
 
             }
@@ -145,18 +137,16 @@ public class ChiTietActivity extends AppCompatActivity {
                 //Save gio hang
                 loadGioHang();
                 SavegioHang(sp);
-                showToastTy();
-//                Toast.makeText(ChiTietActivity.this, "Đã thêm vào giỏ hàng trên sever", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
-    public void showToastTy(){
+    public void showToastTy(String msg){
         Toasty.Config.getInstance()
                 .setTextColor(Color.parseColor("#FFF1DD2F"))
                 .setSuccessColor(Color.parseColor("#FFF11616"))
                 .apply();
-        Toasty.success(ChiTietActivity.this,"Đã thêm vào giỏ hàng").show();
+        Toasty.success(ChiTietActivity.this,msg).show();
     }
     public void loadhinh(ImageView img ,String hinh){
         Picasso.get()
@@ -291,11 +281,29 @@ public class ChiTietActivity extends AppCompatActivity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPrefs.edit();
         Gson gson = new Gson();
-        arrayList_giohang.add(sp);
-        String json = gson.toJson(arrayList_giohang);
 
-        editor.putString("arrayGioHang", json);
-        editor.commit();
+        if(arrayList_giohang.size()!=0){
+            for(int i=0;i<arrayList_giohang.size();i++){
+                if(sp.getMaSP()==arrayList_giohang.get(i).getMaSP()){
+                    showToastTy("Sản phẫm đã có trong giỏ hàng");
+                    isAdd=false;
+                    break;
+                }
+            }if(isAdd==true){
+                arrayList_giohang.add(sp);
+                String json = gson.toJson(arrayList_giohang);
+                editor.putString("arrayGioHang", json);
+                editor.commit();
+                showToastTy("Đã thêm sản phẩm vào giỏ hàng");
+            }
+
+        }else {
+            arrayList_giohang.add(sp);
+            String json = gson.toJson(arrayList_giohang);
+            editor.putString("arrayGioHang", json);
+            editor.commit();
+        }
+
     }
 
     public void loadGioHang() {
@@ -308,5 +316,15 @@ public class ChiTietActivity extends AppCompatActivity {
             arrayList_giohang = gson.fromJson(json, type);
         }
 
+    }
+    public class mHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    setUpRcHorizontal();
+            }
+        }
     }
 }
