@@ -56,8 +56,8 @@ public class GioHangActivity extends AppCompatActivity {
                 // update 4/12/2018
                 if(arrayList_giohang.size()!=0 && getEditSoluong().trim().length()!=0){
                     updateSoluong( getEditSoluong());
-                    Log.d("AAA",getEditSoluong()+"");
-                    tinhtong();
+                }else if(arrayList_giohang.size()!=0 && getEditSoluong().trim().length()==0) {
+                    updateSoluong( "1");
                 }
                 //
                 sendBackArrayGioHangEditSanPhamActivity();
