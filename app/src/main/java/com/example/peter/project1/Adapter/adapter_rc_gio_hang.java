@@ -38,7 +38,6 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
     Context c;
    Activity activity;
     static String chuoiEdit="";
-    int count=0;
     public adapter_rc_gio_hang(ArrayList<SanPham> arrayList, Context c, Activity activity) {
         this.arrayList = arrayList;
         this.c=c;
@@ -97,7 +96,7 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
                     count ++;
                     holder.et_soluong_giohang.setText(count+"");
                     arrayList.get(position).setSoluong(count);
-
+                     tinhtong();
 
             }
         });
@@ -110,6 +109,7 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
                     count--;
                     holder.et_soluong_giohang.setText(count+"");
                     arrayList.get(position).setSoluong(count);
+                    tinhtong();
                 }
             }
         });
@@ -180,5 +180,4 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         // show it
         alertDialog.show();
     }
-
 }
