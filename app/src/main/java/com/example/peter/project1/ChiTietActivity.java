@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -133,10 +134,13 @@ public class ChiTietActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(key==0){
                     Addgiohang(sp);
+                    //Save gio hang
+                    loadGioHang();
+                    SavegioHang(sp);
+                }if (key==2){
+                    showToastTy("Sản phẩm đã cò trong giỏ hàng");
                 }
-                //Save gio hang
-                loadGioHang();
-                SavegioHang(sp);
+
 
             }
         });

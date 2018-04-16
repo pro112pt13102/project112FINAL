@@ -73,10 +73,10 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(c,ChiTietActivity.class);
-//                i.putExtra("SanPham",sp);
-//                startActivity(c,i,null);
-                Toast.makeText(c, ""+Loaisp, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(c,ChiTietActivity.class);
+                i.putExtra("SanPham",sp);
+                i.putExtra("key",2);
+                startActivity(c,i,null);
             }
         });
         //

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.volley.Request;
@@ -232,18 +233,17 @@ public class SanPhamActivity extends AppCompatActivity {
 
     public static void Addgiohang(SanPham sp) {
         int index = CheckSanphamTrung(sp);
-        Log.d("222",""+ sp.getTenSanPha());
+
         if (index == -1) {
-            SanPham sp1=new SanPham(sp.getTenSanPha(),sp.getDongia(),sp.getHinh(),sp.getSoluong(),sp.getMaSP());
+            SanPham sp1=new SanPham(sp.getTenSanPha(),sp.getDongia(),sp.getHinh(),sp.getSoluong(),sp.getMaSP(),sp.getMaDm(),sp.getGioithieu(),sp.getLoai());
             arrayList_giohang.add(sp1);
-            Log.d("111","deo trung"+sp.getTenSanPha());
+//            Log.d("222",""+ sp1.getLoai());
             setNumberBadge(CountSizeArray(arrayList_giohang));
         } else {
             SanPham spInArrayList  =arrayList_giohang.get(index);
             int newSoluong = spInArrayList.getSoluong()+1;
             spInArrayList.setSoluong(newSoluong);
             setNumberBadge(CountSizeArray(arrayList_giohang));
-            Log.d("AAA","true");
         }
     }
 
