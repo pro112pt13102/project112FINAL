@@ -39,7 +39,7 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
     Context c;
    Activity activity;
     static String chuoiEdit="";
-    int count =0;
+    int count =1;
     public adapter_rc_gio_hang(ArrayList<SanPham> arrayList, Context c, Activity activity) {
         this.arrayList = arrayList;
         this.c=c;
@@ -123,6 +123,10 @@ public class adapter_rc_gio_hang extends RecyclerView.Adapter<adapter_rc_gio_han
             public void afterTextChanged(Editable editable) {
                 System.out.println("afterTextChanged " + new String(editable.toString()));
                 chuoiEdit=editable.toString();
+                if(chuoiEdit.trim().length()!=0){
+                    count=Integer.parseInt(chuoiEdit);
+                }
+
             }
         });
         //  tăng giảm sản phẩm
