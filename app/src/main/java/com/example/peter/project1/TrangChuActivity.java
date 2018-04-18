@@ -1,13 +1,16 @@
 package com.example.peter.project1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +25,8 @@ import com.bumptech.glide.Glide;
 import com.example.peter.project1.Adapter.AdapterSlideShow;
 import com.example.peter.project1.Adapter.adapter_rc_horizontalview;
 import com.example.peter.project1.Model.SanPham;
+import com.example.peter.project1.Model.User;
+import com.example.peter.project1.Model.UserData;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,8 +34,15 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -63,6 +75,9 @@ public class TrangChuActivity extends AppCompatActivity {
     //User Data Post To Server DucNguyen
 
     String dataNameUser, dataEmailUser;
+    DatabaseReference databaseReference;
+    boolean checkUserDuplicate = false;
+    ArrayList<UserData> listData = new ArrayList<UserData>();
 
     //End..
 
@@ -115,6 +130,9 @@ public class TrangChuActivity extends AppCompatActivity {
 
         //LoginGoogle
         initGoogle();
+
+        //Send User Data Login To Firebase
+        startSendData();
     }
     public void AnhXa(){
         navigationView=findViewById(R.id.nav_view);
@@ -300,5 +318,113 @@ public class TrangChuActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //Check Duplicate UserData To Firebase Realtime Database
+    public boolean checkDuplicateLoginDataToFirebase(){
+
+//        try {
+//            databaseReference = FirebaseDatabase.getInstance().getReference("users");
+//
+//            String id = databaseReference.push().getKey();
+//
+//            User user = new User(dataNameUser, "", "", dataEmailUser, "");
+//
+//            databaseReference.child(id).setValue(user);
+//
+//            Toast.makeText(this, "Data User Added", Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(this, e+"", Toast.LENGTH_SHORT).show();
+//        }
+        if (dataNameUser != null && dataEmailUser != null){
+
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+            database.child("users").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    UserData userData = dataSnapshot.getValue(UserData.class);
+
+                    if (userData.memail.equals(dataEmailUser)==true){
+                        checkUserDuplicate = true;
+//                        Toast.makeText(getApplicationContext(), "Duplicate !!!! "+checkUserDuplicate+"", Toast.LENGTH_SHORT).show();
+                    }
+
+                    //add to arraylist listData
+                    listData.add(userData);
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+
+        return checkUserDuplicate;
+    }
+
+    //Send UserData To Firebase Realtime Database
+    public void saveUserdataToFirebase(){
+
+//        Toast.makeText(getApplicationContext(), checkUserDuplicate+"", Toast.LENGTH_SHORT).show();
+        if (dataNameUser != null && dataEmailUser != null) {
+
+            if (checkUserDuplicate==true){
+                //khong lam gi het
+            }else {
+                try {
+                    databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+                    String id = databaseReference.push().getKey();
+
+                    UserData user = new UserData(dataNameUser, "", "", dataEmailUser, "");
+
+                    databaseReference.child(id).setValue(user);
+
+                    Toast.makeText(getApplicationContext(), "Data User Added", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e + "", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+    }
+
+    public void startSendData(){
+
+        checkDuplicateLoginDataToFirebase();
+
+        final CountDownTimer countDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                Toast.makeText(TrangChuActivity.this, "Please Wait ...", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFinish() {
+                saveUserdataToFirebase();
+            }
+        };
+        countDownTimer.start();
+
     }
 }

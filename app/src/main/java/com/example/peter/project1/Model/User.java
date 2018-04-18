@@ -19,8 +19,11 @@ public class User {
         this.ghichu = ghichu;
     }
 
+    public User() {
+    }
+
     public void setHoTen(String hoTen) {
-        HoTen = hoTen;
+        this.HoTen = hoTen;
     }
 
     public void setSdt(String sdt) {
