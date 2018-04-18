@@ -7,13 +7,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="15dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/border">
+        android:layout_margin="5dp">
 
         <ImageView
             android:src="@drawable/garan"
@@ -22,7 +23,6 @@
             android:layout_height="150dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="216dp"
+            android:layout_marginTop="150dp"
             android:text="Cái này là tên sp nè"
             android:textColor="@color/tensp"
             android:textSize="@dimen/sizechu"
@@ -45,11 +45,11 @@
         <TextView
             android:id="@+id/tv_giasp"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="248dp"
+            android:layout_marginTop="180dp"
             android:paddingBottom="20dp"
             android:text="400.000 VND"
             android:textColor="#fa280e"
