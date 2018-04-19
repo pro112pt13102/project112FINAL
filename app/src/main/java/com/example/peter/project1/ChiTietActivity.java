@@ -90,7 +90,7 @@ public class ChiTietActivity extends AppCompatActivity {
 
     }
     public void getData1Sanpham(){
-        key=getIntent().getIntExtra("key",0);
+        key=getIntent().getIntExtra("key",1);
         sp= (SanPham) getIntent().getSerializableExtra("SanPham");
         giaSp.setText(sp.getDongia()+"");
         tenSp.setText(sp.getTenSanPha());
@@ -132,13 +132,16 @@ public class ChiTietActivity extends AppCompatActivity {
         img_giohang_chi_tiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(key==0){
+                if(key==0 ){
                     Addgiohang(sp);
                     //Save gio hang
                     loadGioHang();
                     SavegioHang(sp);
                 }if (key==2){
                     showToastTy("Sản phẩm đã cò trong giỏ hàng");
+                }if(key==1){
+                    loadGioHang();
+                    SavegioHang(sp);
                 }
 
 
