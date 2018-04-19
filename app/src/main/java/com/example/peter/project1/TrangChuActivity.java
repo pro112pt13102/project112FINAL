@@ -2,6 +2,7 @@ package com.example.peter.project1;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -74,10 +75,15 @@ public class TrangChuActivity extends AppCompatActivity {
 
     //User Data Post To Server DucNguyen
 
-    String dataNameUser, dataEmailUser;
+    String dataIdUser, dataNameUser, dataEmailUser;
+    String dataSdt = "", dataDiaChi = "", dataGhiChu = "";
     DatabaseReference databaseReference;
     boolean checkUserDuplicate = false;
     ArrayList<UserData> listData = new ArrayList<UserData>();
+
+    public static final String USER_DATABASE = "userDatabase";
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     //End..
 
@@ -389,16 +395,20 @@ public class TrangChuActivity extends AppCompatActivity {
         if (dataNameUser != null && dataEmailUser != null) {
 
             if (checkUserDuplicate==true){
-                //khong lam gi het
+                for (int i = 0; i < listData.size(); i++){
+                    if (dataEmailUser.equals(listData.get(i).memail)){
+                        dataIdUser = listData.get(i).mId;
+                    }
+                }
             }else {
                 try {
                     databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-                    String id = databaseReference.push().getKey();
+                    dataIdUser = databaseReference.push().getKey();
 
-                    UserData user = new UserData(dataNameUser, "", "", dataEmailUser, "");
+                    UserData user = new UserData(dataIdUser, dataNameUser, "", "", dataEmailUser, "");
 
-                    databaseReference.child(id).setValue(user);
+                    databaseReference.child(dataIdUser).setValue(user);
 
                     Toast.makeText(getApplicationContext(), "Data User Added", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
@@ -407,6 +417,32 @@ public class TrangChuActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void saveSharedPreferencesFirebaseData(){
+
+        if (dataNameUser != null && dataEmailUser != null) {
+            //
+            for (int i = 0; i < listData.size(); i++){
+                if (dataEmailUser.equals(listData.get(i).memail)){
+                    dataSdt = listData.get(i).msdt.toString();
+                    dataDiaChi = listData.get(i).mdiachi.toString();
+                    dataGhiChu = listData.get(i).mghichu.toString();
+                }
+            }
+            //
+            sharedPreferences = getSharedPreferences(USER_DATABASE, MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            editor.putString("mID", dataIdUser);
+            editor.putString("mHoTen", dataNameUser);
+            editor.putString("memail", dataEmailUser);
+            editor.putString("msdt", dataSdt);
+            editor.putString("mdiachi", dataDiaChi);
+            editor.putString("mghichu", dataGhiChu);
+
+            editor.commit();
+        }
+
     }
 
     public void startSendData(){
@@ -422,6 +458,7 @@ public class TrangChuActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 saveUserdataToFirebase();
+                saveSharedPreferencesFirebaseData();
             }
         };
         countDownTimer.start();

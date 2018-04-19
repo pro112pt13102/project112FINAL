@@ -3,6 +3,7 @@ package com.example.peter.project1.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.CountDownTimer;
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 import static com.example.peter.project1.MuaNgayActivity.setCurrentPage;
 
 import static com.example.peter.project1.MuaNgayActivity.setCurrentStateTwo;
+import static com.example.peter.project1.TrangChuActivity.USER_DATABASE;
 
 
 /**
@@ -61,11 +63,14 @@ public class ThongTinFragment extends android.support.v4.app.Fragment {
     public GoogleApiClient mGoogleApiClient;
     FirebaseAuth mAuth;
 
-    String dataNameUser, dataEmailUser;
+    String dataIdUser, dataNameUser, dataEmailUser;
+    String emailToCheck;
 
     DatabaseReference databaseReference;
     boolean checkUserDuplicate = false;
     ArrayList<UserData> listData = new ArrayList<UserData>();
+
+    SharedPreferences sharedPreferences;
 
     //End DucNguyen Component
 
@@ -104,6 +109,9 @@ public class ThongTinFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Validation();
+
+                //DucNguyen Component
+                updateUserdataToFirebase();
             }
         });
     }
@@ -250,20 +258,23 @@ public class ThongTinFragment extends android.support.v4.app.Fragment {
     public void updateUserdataToFirebase(){
 
 //        Toast.makeText(getApplicationContext(), checkUserDuplicate+"", Toast.LENGTH_SHORT).show();
-        //Dang SAI
+
         if (dataNameUser != null && dataEmailUser != null) {
 
             if (checkUserDuplicate==true){
                 //khong lam gi het
             }else {
                 try {
-                    databaseReference = FirebaseDatabase.getInstance().getReference("users");
+                    if (dataIdUser != "" && dataIdUser != null) {
 
-                    UserData user = new UserData(dataNameUser, "", "", dataEmailUser, "");
+                        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(dataIdUser);
 
-                    databaseReference.setValue(user);
+                        UserData user = new UserData(dataIdUser, dataNameUser, user_sdt, user_diachi, dataEmailUser, user_ghichu);
 
-                    Toast.makeText(getContext(), "Data User Updated", Toast.LENGTH_SHORT).show();
+                        databaseReference.setValue(user);
+
+                        Toast.makeText(getContext(), "Data User Updated", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (Exception e) {
 //                    Toast.makeText(getApplicationContext(), e + "", Toast.LENGTH_SHORT).show();
                 }
@@ -274,27 +285,32 @@ public class ThongTinFragment extends android.support.v4.app.Fragment {
 
     public void addDataToForm(){
 
-        checkDuplicateLoginDataToFirebase();
+        if (dataNameUser != null && dataEmailUser != null) {
+//            for (int i = 0; i < listData.size(); i++){
+//                if (dataEmailUser.equals(listData.get(i).memail)){
+//                    et_hoten_thongtin.setText(listData.get(i).mHoTen.toString());
+//                    et_email_thongtin.setText(listData.get(i).memail.toString());
+//                }
+//            }
 
-        final CountDownTimer countDownTimer = new CountDownTimer(3000,1000) {
-            @Override
-            public void onTick(long l) {
-                Toast.makeText(getContext(), "Please wait ...", Toast.LENGTH_SHORT).show();
+            sharedPreferences = this.getActivity().getSharedPreferences(USER_DATABASE, Context.MODE_PRIVATE);
+
+            emailToCheck = sharedPreferences.getString("memail", "");
+            dataIdUser = sharedPreferences.getString("mID", "");
+
+            if (emailToCheck.equals(dataEmailUser)) {
+
+                et_hoten_thongtin.setText(sharedPreferences.getString("mHoTen", ""));
+                et_sdt_thongtin.setText(sharedPreferences.getString("msdt", ""));
+                et_diachi_thongtin.setText(sharedPreferences.getString("mdiachi", ""));
+                et_email_thongtin.setText(sharedPreferences.getString("memail", ""));
+                et_ghichu_thongtin.setText(sharedPreferences.getString("mghichu", ""));
+            }else {
+                et_hoten_thongtin.setText(dataNameUser);
+                et_email_thongtin.setText(dataEmailUser);
             }
 
-            @Override
-            public void onFinish() {
-                if (dataNameUser != null && dataEmailUser != null) {
-                    for (int i = 0; i < listData.size(); i++){
-                        if (dataEmailUser.equals(listData.get(i).memail)){
-                            et_hoten_thongtin.setText(listData.get(i).mHoTen.toString());
-                            et_email_thongtin.setText(listData.get(i).memail.toString());
-                        }
-                    }
-                }
-            }
-        };
-        countDownTimer.start();
+        }
     }
 }
 
