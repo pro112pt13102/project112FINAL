@@ -1,9 +1,13 @@
 package com.example.peter.project1;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -65,6 +69,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("RestrictedApi")
     public void init() {
+        //Check Connecttion
+        if(isNetworkConnected()==false){
+            showDialog();
+        }
         //first we intialized the FirebaseAuth object
         mAuth = FirebaseAuth.getInstance();
 
@@ -91,6 +99,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -180,5 +190,31 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d("Login",e+"");
         }
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
+    private void showDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                LoginActivity.this);
+        // set title
+        alertDialogBuilder.setTitle("Thông báo");
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Vui lòng kiểm tra lại mạng!")
+                .setCancelable(false)
+                .setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                       System.exit(0);
+                    }
+                });
+
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
     }
 }
