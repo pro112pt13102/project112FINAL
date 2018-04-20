@@ -21,6 +21,7 @@ import com.example.peter.project1.Model.User;
 import com.example.peter.project1.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.peter.project1.Fragment.ThongTinFragment.MY_PREFS_NAME;
@@ -68,7 +69,7 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
         txt_sdt=v.findViewById(R.id.tv_sdt_hoantat);
         // set tổng tiền
         tv_tongtien=v.findViewById(R.id.tv_tongtien);
-        tv_tongtien.setText(CountTotalMoney()+"");
+        tv_tongtien.setText(DinhDangTien(String.valueOf(CountTotalMoney()))+" VNĐ");
 
         rc_giohang_hoantat=v.findViewById(R.id.rc_giohang_fragment_hoan_tat);
         btn_hoantat=v.findViewById(R.id.btn_hoantat);
@@ -114,5 +115,42 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
         txt_ghichu.setText(user.getGhichu());
         txt_sdt.setText(user.getSdt());
     }
+    public   String DinhDangTien(String chuoi){
+        String chuoiso="";
+        //khoản ký tự
+        int size=0;
+        // Tạo mảng chứa chuỗi con
+        ArrayList<String> arrChuoi = new ArrayList();
+        // đão ký tự chuổi
+        String chuoidao= new StringBuilder(chuoi).reverse().toString();
+        // định dạng chuỗi
+        if(chuoi.length()>=4){
+            while(true){
+                size+=3;
+                if(chuoi.length()-size<1){
+                    String chuoicuoi="";
+                    if(size-chuoi.length()==2){
+                        chuoicuoi=String.valueOf(chuoidao.charAt(chuoi.length()-1));
+                    }if(size-chuoi.length()==1){
+                        chuoicuoi=String.valueOf(chuoidao.charAt(chuoi.length()-2))+String.valueOf(chuoidao.charAt(chuoi.length()-1));
+                    }if(size-chuoi.length()==0){
+                        chuoicuoi=String.valueOf(chuoidao.charAt(chuoi.length()-3))+String.valueOf(chuoidao.charAt(chuoi.length()-2))+String.valueOf(chuoidao.charAt(chuoi.length()-1));
+                    }
+                    arrChuoi.add(new StringBuilder(chuoicuoi).reverse().toString());
+                    break;
+                }else{
+                    String chuoicon=chuoidao.substring(size-3, size)+".";
+                    arrChuoi.add(new StringBuilder(chuoicon).reverse().toString());
+                }
 
+            }
+        }
+        // Nối chuỗi
+        Collections.reverse(arrChuoi);
+        for(int i=0;i<arrChuoi.size();i++){
+            chuoiso=chuoiso+arrChuoi.get(i);
+
+        }
+        return chuoiso;
+    }
 }
