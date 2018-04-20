@@ -3,6 +3,8 @@ package com.example.peter.project1;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 
 import com.example.peter.project1.Adapter.adapterFragmentMuaNgayActivity;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class MuaNgayActivity extends AppCompatActivity implements ThongTinFragment.SendData{
     static OneDirectionWipeViewpager vp_mungay_activity;
     static StateProgressBar stateProgressBar;
+    ImageButton  imbtn_back_thanhtoan;
     ArrayList<SanPham> arrayListgiohang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +30,19 @@ public class MuaNgayActivity extends AppCompatActivity implements ThongTinFragme
         Anhxa();
         getGiohangFromGiohangActivity();
         setUpViewpager();
+        //Back về activity trước
+        imbtn_back_thanhtoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     public void Anhxa(){
         arrayListgiohang=new ArrayList<>();
         vp_mungay_activity=findViewById(R.id.vp_mungay_activity);
         stateProgressBar=findViewById(R.id.state_progress_bar);
+        imbtn_back_thanhtoan=findViewById(R.id.img_btn_back_thanhtoan);
     }
     public void setUpViewpager(){
         adapterFragmentMuaNgayActivity adapter = new adapterFragmentMuaNgayActivity(getSupportFragmentManager(),arrayListgiohang);

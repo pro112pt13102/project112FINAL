@@ -6,6 +6,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.peter.project1.MuaNgayActivity">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/maunen">
+
+        <ImageButton
+            android:id="@+id/img_btn_back_thanhtoan"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/mauchu"
+            android:background="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Thanh toán"
+            android:textStyle="bold"
+            android:textColor="@color/mauchu"
+            android:textSize="@dimen/sizeMrFood"
+            android:gravity="center"/>
+
+    </android.support.constraint.ConstraintLayout>
     <com.kofigyan.stateprogressbar.StateProgressBar
         android:id="@+id/state_progress_bar"
         android:layout_width="wrap_content"
