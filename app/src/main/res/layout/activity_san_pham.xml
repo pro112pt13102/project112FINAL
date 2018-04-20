@@ -8,6 +8,7 @@
     tools:context="com.example.peter.project1.SanPhamActivity">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/maunen">
@@ -39,16 +40,16 @@
                 android:textSize="@dimen/sizeMrFood"
                 android:textStyle="bold" />
 
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/ic_search"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <!--<ImageButton-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_marginBottom="8dp"-->
+                <!--android:layout_marginEnd="15dp"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:background="@drawable/ic_search"-->
+                <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--app:layout_constraintEnd_toEndOf="parent"-->
+                <!--app:layout_constraintTop_toTopOf="parent" />-->
 
             <com.example.peter.project1.CustomView.Badge
                 android:id="@+id/badge"
@@ -62,7 +63,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="64dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/ic_giohang"
                 app:layout_constraintBottom_toBottomOf="parent"

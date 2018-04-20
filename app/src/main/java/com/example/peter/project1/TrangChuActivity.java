@@ -452,7 +452,7 @@ public class TrangChuActivity extends AppCompatActivity {
         final CountDownTimer countDownTimer = new CountDownTimer(5000,1000) {
             @Override
             public void onTick(long l) {
-                Toast.makeText(TrangChuActivity.this, "Please Wait ...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TrangChuActivity.this, "Please Wait ...", Toast.LENGTH_SHORT).show();
             }
 
             @Override
