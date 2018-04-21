@@ -77,8 +77,10 @@ public class SanPhamActivity extends AppCompatActivity {
     int sizeOfArrayrespone=1;
     int Madm;
     int isEmpty=0;
+    boolean chkUp=false;
     ArrayList<SanPham> arrayResponse;
     mHandler mHandler;
+    int count =0;
 
     //DucNguyen SearchView Component
 
@@ -138,7 +140,7 @@ public class SanPhamActivity extends AppCompatActivity {
             }
         });
         //
-        mHandler =new mHandler();
+//        mHandler =new mHandler();
 
     }
 
@@ -187,56 +189,108 @@ public class SanPhamActivity extends AppCompatActivity {
         }
         maSPCuoi=arrayListSanPham.get(arrayListSanPham.size()-1).getMaSP();
         maSpDau=arrayListSanPham.get(0).getMaSP();
+//        Toast.makeText(this, "mã sản phẩm cuối: "+maSPCuoi, Toast.LENGTH_SHORT).show();
     }
 
     public void pulldownToRefresh() {
+        arrayResponse.clear();
         swipe_refresh_layout.setColor(ContextCompat.getColor(SanPhamActivity.this, android.R.color.holo_red_dark));
         swipe_refresh_layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Thread t = new Thread(){
+//                Thread t = new Thread(){
+//                    @Override
+//                    public void run() {
+//                        super.run();
+//                        setUrlRequestPullDown();
+//                        while (true){
+//                            if(arrayResponse.size()!=0){
+//                                mHandler.sendEmptyMessage(1);
+//                                break;
+//                            }
+//                        }
+//                    }
+//                };
+//                t.start();
+                setUrlRequestPullDown();
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        super.run();
-                        setUrlRequestPullDown();
-                        while (true){
-                            if(arrayResponse.size()!=0){
-                                mHandler.sendEmptyMessage(1);
-                                break;
+                        //Add new Data
+                        if(arrayResponse.get(0).getMaSP()!=-1){
+                            Collections.reverse(arrayResponse);
+                            for (int i = 0; i < arrayResponse.size(); i++) {
+                                arrayListSanPham.add(i, arrayResponse.get(i));
                             }
+                            maSpDau=arrayResponse.get(arrayResponse.size()-1).getMaSP();
+                            adapter.notifyDataSetChanged();
                         }
+                        swipe_refresh_layout.setRefreshing(false);
                     }
-                };
-                t.start();
-
+                }, 3000);
             }
         });
     }
 
     public void PullUptoRefresh() {
+
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-                    if(isEmpty!=-1){
-                        arrayListSanPham.add(null);
-                        arrayListSanPham.add(null);
-                        adapter.notifyItemInserted(arrayListSanPham.size() - 2);
-                        adapter.notifyItemInserted(arrayListSanPham.size() - 1);
-                        Thread t = new Thread(){
-                            @Override
-                            public void run() {
-                                super.run();
-                                setUrlRequestPullUp();
-                                while (true){
-                                    if(arrayResponse.size()!=0){
-                                        mHandler.sendEmptyMessage(0);
-                                        break;
-                                    }
-                                }
-                            }
-                        };
-                        t.start();
-                    }
+                arrayResponse.clear();
+//                    if(isEmpty!=-1){
+//                        arrayListSanPham.add(null);
+//                        arrayListSanPham.add(null);
+//                        adapter.notifyItemInserted(arrayListSanPham.size() - 2);
+//                        adapter.notifyItemInserted(arrayListSanPham.size() - 1);
+//                        Thread t = new Thread(){
+//                            @Override
+//                            public void run() {
+//                                super.run();
+//                                setUrlRequestPullUp();
+//                                while (true){
+//                                    if(arrayResponse.size()!=0){
+//                                        mHandler.sendEmptyMessage(0);
+//                                        break;
+//                                    }
+//                                }
+//                            }
+//                        };
+//                        t.start();
+//                    }
+                if(isEmpty!=-1){
+                    setUrlRequestPullUp();
+                    arrayListSanPham.add(null);
+                    arrayListSanPham.add(null);
+                    adapter.notifyItemInserted(arrayListSanPham.size() - 2);
+                    adapter.notifyItemInserted(arrayListSanPham.size() - 1);
+                   new Handler().postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+                           //Remove item loading
+                           arrayListSanPham.remove(arrayListSanPham.size() - 2);
+                           arrayListSanPham.remove(arrayListSanPham.size() - 1);
+                           adapter.notifyItemRemoved(arrayListSanPham.size());
+                            //Add new Data
+                               if(arrayResponse.size()!=0){
+                                   if(arrayResponse.get(0).getMaSP()!=-1){
+                                       maSPCuoi=arrayResponse.get(arrayResponse.size()-1).getMaSP();
+                                       arrayListSanPham.addAll(arrayResponse);
+                                       adapter.notifyDataSetChanged();
+//                                       for(int i=0;i<arrayResponse.size();i++){
+//                                           Log.d("AAA",""+arrayResponse.get(i).getMaSP());
+//                                       }
+//                                       for(int i=0;i<arrayListSanPham.size();i++){
+//                                           Log.d("111","Array San pham  "+arrayListSanPham.get(i).getMaSP() );
+//                                       }
+                                   }
+                                   adapter.notifyDataSetChanged();
+                                   adapter.setLoaded();
+                               }
+                       }
+                   }, 4000);
+                }
+
             }
         });
     }
@@ -328,6 +382,7 @@ public class SanPhamActivity extends AppCompatActivity {
      return size;
     }
     public void PullUploadDataDoAn(String url){
+
         // Initialize a new RequestQueue instance
         final RequestQueue requestQueue = Volley.newRequestQueue(SanPhamActivity.this);
 
@@ -343,7 +398,7 @@ public class SanPhamActivity extends AppCompatActivity {
 //                        sizeOfArrayrespone=response.length();
                         try{
                             // Loop through the array elements
-                            arrayResponse.clear();
+//                            arrayResponse.clear();
                             SanPham monAn=null;
                             for(int i=0;i<response.length();i++){
                                 // Get current json object
@@ -396,7 +451,7 @@ public class SanPhamActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         // Process the JSON
-                        arrayResponse.clear();
+//                        arrayResponse.clear();
                         try{
                             SanPham monAn=null;
                             // Loop through the array elements
@@ -449,7 +504,7 @@ public class SanPhamActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         // Process the JSON
-                        arrayResponse.clear();
+//                        arrayResponse.clear();
                         try{
                             SanPham monAn = null;
                             // Loop through the array elements
@@ -505,7 +560,7 @@ public class SanPhamActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         // Process the JSON
-                        arrayResponse.clear();
+//                        arrayResponse.clear();
                         try{
                             SanPham monAn = null;
                             // Loop through the array elements
@@ -553,6 +608,7 @@ public class SanPhamActivity extends AppCompatActivity {
             // Danh sách giảm dần
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai-co-ma-nho-hon&maloai="+Madm+"&ma="+maSPCuoi+"&soluong=6";
             PullUploadDataDoAn(url);
+            Log.d("AAA",""+url);
         }
         if(title.equalsIgnoreCase("Các Loại Khác")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")||title.equalsIgnoreCase("Thức uống")){
 //            String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-co-ma-nho-hon&ma="+maSPCuoi+"&soluong=6";
@@ -591,10 +647,34 @@ public class SanPhamActivity extends AppCompatActivity {
                     adapter.notifyItemRemoved(arrayListSanPham.size());
 //                               Add more data
                     if(arrayResponse.get(0).getMaSP()!=-1){
+                        maSPCuoi=arrayResponse.get(arrayResponse.size()-1).getMaSP();
+                        Collections.reverse(arrayResponse);
                         arrayListSanPham.addAll(arrayResponse);
-                        maSPCuoi=arrayListSanPham.get(arrayListSanPham.size()-1).getMaSP();
                         adapter.notifyDataSetChanged();
+//                     Toast.makeText(SanPhamActivity.this, ""+arrayResponse.size() +" -"+maSPCuoi, Toast.LENGTH_SHORT).show();
+                        for(int i=0;i<arrayResponse.size();i++){
+                            Log.d("AAA",""+arrayResponse.get(i).getMaSP());
+                        }
+                        for(int i=0;i<arrayListSanPham.size();i++){
+                            Log.d("111","Array San pham  "+arrayListSanPham.get(i).getMaSP() );
+                        }
+
+
                     }
+//                    if(arrayResponse.get(0).getMaSP()!=-1){
+//                        for(int i=0;i<arrayResponse.size();i++){
+////                            Toast.makeText(SanPhamActivity.this, ""+arrayResponse.size(), Toast.LENGTH_SHORT).show();
+//                            arrayListSanPham.add(arrayResponse.get(i));
+//                        }
+//                        maSPCuoi=arrayResponse.get(arrayResponse.size()-1).getMaSP();
+//                        adapter.notifyDataSetChanged();
+//                        for(int i=0;i<arrayResponse.size();i++){
+//                            Log.d("AAA","Array Response"+arrayResponse.get(i).getMaSP());
+//                        }
+//                        for(int i=0;i<arrayResponse.size();i++){
+//                            Log.d("111","Array San pham  "+arrayListSanPham.get(i).getMaSP());
+//                        }
+//                    }
                     adapter.setLoaded();
                 case 1:
 //                        Add more data
