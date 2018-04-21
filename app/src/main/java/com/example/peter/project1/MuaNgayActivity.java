@@ -14,9 +14,12 @@ import com.example.peter.project1.Fragment.HoanTatFragment;
 import com.example.peter.project1.Fragment.ThongTinFragment;
 import com.example.peter.project1.Model.SanPham;
 import com.example.peter.project1.Model.User;
+import com.facebook.FacebookSdk;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MuaNgayActivity extends AppCompatActivity implements ThongTinFragment.SendData{
     static OneDirectionWipeViewpager vp_mungay_activity;
@@ -26,6 +29,7 @@ public class MuaNgayActivity extends AppCompatActivity implements ThongTinFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_mua_ngay);
         Anhxa();
         getGiohangFromGiohangActivity();

@@ -41,6 +41,7 @@ import es.dmoral.toasty.Toasty;
 
 import static com.example.peter.project1.SanPhamActivity.Addgiohang;
 import static com.example.peter.project1.SanPhamActivity.arrayList_giohang;
+import static com.example.peter.project1.SanPhamActivity.setNumberBadge;
 
 public class ChiTietActivity extends AppCompatActivity {
     SanPham sp;
@@ -126,6 +127,7 @@ public class ChiTietActivity extends AppCompatActivity {
         img_back_chitiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setNumberBadge(arrayList_giohang.size());
                 finish();
             }
         });
@@ -157,10 +159,17 @@ public class ChiTietActivity extends AppCompatActivity {
         Toasty.success(ChiTietActivity.this,msg).show();
     }
     public void loadhinh(ImageView img ,String hinh){
+//        Picasso.get()
+//                .load("http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh)
+//                .centerCrop()
+//                .resize(200,200)
+//                .into(img);
+        String url2="https://firebasestorage.googleapis.com/v0/b/finalloginproject112.appspot.com/o/dogImages%2Fga-tay-nuong.jpg?alt=media&token=437441a5-b248-406d-9a48-7f072e83bd17";//        Picasso.get()
+
         Picasso.get()
-                .load("http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh)
-                .centerCrop()
+                .load(url2)
                 .resize(200,200)
+                .error(R.drawable.ic_launcher_background)
                 .into(img);
     }
     public void setUpRcHorizontal(){

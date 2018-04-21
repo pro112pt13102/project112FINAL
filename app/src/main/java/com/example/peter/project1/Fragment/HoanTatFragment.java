@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,19 +16,30 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.peter.project1.Adapter.adapter_rc_fragment_hoan_tat;
+import com.example.peter.project1.Model.DonHang;
 import com.example.peter.project1.Model.SanPham;
 import com.example.peter.project1.Model.User;
 import com.example.peter.project1.R;
+import com.facebook.FacebookSdk;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.peter.project1.Fragment.ThongTinFragment.MY_PREFS_NAME;
 import static com.example.peter.project1.GioHangActivity.RemoveArraylistGiohang;
-
-
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 /**
@@ -40,6 +52,7 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
     View v;
     ArrayList<SanPham> arrayListGiohang;
     RecyclerView rc_giohang_hoantat;
+    User userinfo;
     @SuppressLint("ValidFragment")
     public HoanTatFragment(ArrayList<SanPham> arrayListGiohang) {
         // Required empty public constructor
@@ -79,8 +92,10 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
         btn_hoantat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setDonHang();
                 Toast.makeText(getContext(), "Đã hoàn tất và gửi giỏ hàng lên sever", Toast.LENGTH_SHORT).show();
                 RemoveArraylistGiohang();
+                SavegioHang();
                 getActivity().finish();
             }
         });
@@ -107,7 +122,7 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
         }
     }
     public void displayReceivedData(User user)
-    {
+    {   userinfo = new User(user.getHoTen(),user.getSdt(),user.getDiachi(),user.getEmail(),user.getGhichu());
 //        Toast.makeText(getContext(), ""+message, Toast.LENGTH_SHORT).show();
         txt_hoten.setText(user.getHoTen());
         txt_email.setText(user.getEmail());
@@ -153,4 +168,58 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
         }
         return chuoiso;
     }
+    public void setDonHang(){
+        DonHang donHang = new DonHang(arrayListGiohang,userinfo,userinfo.getGhichu());
+        String jsonDonHang= new Gson().toJson(donHang);
+        // Send Donhang
+//        sendDonHangtoSever(jsonDonHang);
+        Toast.makeText(getContext(), ""+jsonDonHang, Toast.LENGTH_SHORT).show();
+    }
+    public void sendDonHangtoSever(final String jsonDonHang){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        //this is the url where you want to send the request
+        //TODO: replace with your own url to send request, as I am using my own localhost for this tutorial
+        String url = "http://192.168.1.2/Severandroid/json.php";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the response string.
+                        Log.d("AAA",response+"");
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                _response.setText("That didn't work!");
+                Log.d("AAA","That didn't work!");
+            }
+        }) {
+            //adding parameters to the request
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                //Gửi JsonDOnhang voi key là donhang trùng với key get tren sever
+                params.put("donhang",jsonDonHang);
+                return params;
+
+            }
+        };
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+    public void SavegioHang(){
+        arrayListGiohang.clear();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+
+            String json = gson.toJson(arrayListGiohang);
+            editor.putString("arrayGioHang", json);
+            editor.commit();
+
+    }
+
 }

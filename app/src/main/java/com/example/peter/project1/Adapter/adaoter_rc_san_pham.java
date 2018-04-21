@@ -177,10 +177,17 @@ public class adaoter_rc_san_pham extends RecyclerView.Adapter<RecyclerView.ViewH
     public void loadhinh(ImageView img ,String hinh){
         String url="https://drive.google.com/uc?id=1FtZdHDo2O58feOotQPNYtqcDMZOthaSU";
         String url1="http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh;
+        String url2="https://firebasestorage.googleapis.com/v0/b/finalloginproject112.appspot.com/o/dogImages%2Fga-tay-nuong.jpg?alt=media&token=437441a5-b248-406d-9a48-7f072e83bd17";
+//        Picasso.get()
+//                .load(url1)
+//                .centerCrop()
+//                .resize(200,200)
+//                .into(img);
+
         Picasso.get()
-                .load(url1)
-                .centerCrop()
+                .load(url2)
                 .resize(200,200)
+                .error(R.drawable.ic_launcher_background)
                 .into(img);
     }
     public String LongNameWithDot(String tenSp){

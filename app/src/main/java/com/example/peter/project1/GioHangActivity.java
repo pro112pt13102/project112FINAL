@@ -38,7 +38,7 @@ public class GioHangActivity extends AppCompatActivity {
     static TextView tv_giasp_giohang;
     static LinearLayout v_thanh_toan_1;
     static ConstraintLayout v_thanh_toan_2;
-    com.example.peter.project1.Adapter.adapter_rc_gio_hang adapter_rc_gio_hang;
+    static com.example.peter.project1.Adapter.adapter_rc_gio_hang adapter_rc_gio_hang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +119,9 @@ public class GioHangActivity extends AppCompatActivity {
     }
     public static void RemoveArraylistGiohang(){
         arrayList_giohang.clear();
+        adapter_rc_gio_hang.UpdateAraylistGiohang(arrayList_giohang);
+        adapter_rc_gio_hang.notifyDataSetChanged();
+
     }
     public static void showHideThanhToan(int size){
         if(size!=0){
