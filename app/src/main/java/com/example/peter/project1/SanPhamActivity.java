@@ -58,6 +58,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -95,6 +96,7 @@ public class SanPhamActivity extends AppCompatActivity {
 
     SearchView searchView = null;
     private String[] strArrData = {"No Suggestions"};
+    public ArrayList<String> listSearch = new ArrayList<String>();
 
     //test
     private String[] strArrDucNguyen;
@@ -706,6 +708,7 @@ public class SanPhamActivity extends AppCompatActivity {
 
         // Fetch data from mysql table using AsyncTask
         new AsyncFetch().execute();
+        new AsyncFetch1().execute();
 
         //test
     }
@@ -781,19 +784,25 @@ public class SanPhamActivity extends AppCompatActivity {
                     // Filter data
                     final MatrixCursor mc = new MatrixCursor(new String[]{ BaseColumns._ID, "fishName"});
 
-                    //test
-//                    final MatrixCursor mc = new MatrixCursor(new String[]{ BaseColumns._ID, "fishName"});
 
-                    for (int i=0; i<strArrData.length; i++) {
-                        if (strArrData[i].toLowerCase().startsWith(s.toLowerCase()))
-                            mc.addRow(new Object[] {i, strArrData[i]});
+//                    for (int i=0; i<strArrData.length; i++) {
+//                        if (strArrData[i].toLowerCase().startsWith(s.toLowerCase()))
+//                            mc.addRow(new Object[] {i, strArrData[i]});
+//                    }
+//                    myAdapter.changeCursor(mc);
+
+                    for (int i = 0; i < listSearch.size(); i++){
+
+                        if (listSearch.get(i).toString().toLowerCase().startsWith(s.toLowerCase())){
+                            mc.addRow(new Object[] {i, listSearch.get(i).toString()});
+                        }
                     }
                     myAdapter.changeCursor(mc);
                     return false;
                 }
             });
 
-            //test onStart()
+            //onStart()
             searchView.setOnSearchClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -804,7 +813,7 @@ public class SanPhamActivity extends AppCompatActivity {
                 }
             });
 
-            //test onClose()
+            //onClose()
             searchView.setOnCloseListener(new SearchView.OnCloseListener() {
                 @Override
                 public boolean onClose() {
@@ -843,6 +852,7 @@ public class SanPhamActivity extends AppCompatActivity {
     }
 
     // Create class AsyncFetch
+
     private class AsyncFetch extends AsyncTask<String, String, String> {
 
         ProgressDialog pdLoading = new ProgressDialog(SanPhamActivity.this);
@@ -955,6 +965,9 @@ public class SanPhamActivity extends AppCompatActivity {
                         //testDucNguyen
                         dataListDucNguyen.add(json_data.getString("MaMA"));
 
+                        //add to listSearch
+                        listSearch.add(json_data.getString("TenMA"));
+
                         int temp = json_data.getInt("MaMA");
                         String temp2 = json_data.getString("TenMA");
                         String temp3 = json_data.getString("GioiThieu");
@@ -983,6 +996,151 @@ public class SanPhamActivity extends AppCompatActivity {
         }
 
     }
+
+    private class AsyncFetch1 extends AsyncTask<String, String, String> {
+
+//        ProgressDialog pdLoading = new ProgressDialog(SanPhamActivity.this);
+        HttpURLConnection conn;
+        URL url = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            //this method will be running on UI thread
+//            pdLoading.setMessage("\tLoading...");
+//            pdLoading.setCancelable(false);
+//            pdLoading.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                // Enter URL address where your php file resides or your JSON file address
+//                url = new URL("https://app-1510482319.000webhostapp.com/testfish/fetch-all-fish.php");
+                url = new URL("https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong");
+
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return e.toString();
+            }
+            try {
+
+                // Setup HttpURLConnection class to send and receive data from php and mysql
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(READ_TIMEOUT);
+                conn.setConnectTimeout(CONNECTION_TIMEOUT);
+                conn.setRequestMethod("GET");
+
+                // setDoOutput to true as we receive data
+                conn.setDoOutput(true);
+                conn.connect();
+
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+                return e1.toString();
+            }
+
+            try {
+
+                int response_code = conn.getResponseCode();
+
+                // Check if successful connection made
+                if (response_code == HttpURLConnection.HTTP_OK) {
+
+                    // Read data sent from server
+                    InputStream input = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                    StringBuilder result = new StringBuilder();
+                    String line;
+
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    // Pass data to onPostExecute method
+                    return (result.toString());
+
+                } else {
+                    return("Connection error");
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.toString();
+            } finally {
+                conn.disconnect();
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            //this method will be running on UI thread
+            ArrayList<String> dataList = new ArrayList<String>();
+
+            //test Ducnguyen
+            ArrayList<String> dataListDucNguyen = new ArrayList<String>();
+
+//            pdLoading.dismiss();
+
+
+            if(result.equals("no rows")) {
+
+                // Do some action if no data from database
+
+            }else{
+
+                try {
+
+                    JSONArray jArray = new JSONArray(result);
+
+                    // Extract data from json and store into ArrayList
+                    for (int i = 0; i < jArray.length(); i++) {
+                        JSONObject json_data = jArray.getJSONObject(i);
+                        dataList.add(json_data.getString("TenDU"));
+
+                        //testDucNguyen
+                        dataListDucNguyen.add(json_data.getString("MaDU"));
+
+                        //add to listSearch
+                        listSearch.add(json_data.getString("TenDU"));
+
+                        int temp = json_data.getInt("MaDU");
+                        String temp2 = json_data.getString("TenDU");
+                        String temp3 = json_data.getString("GioiThieu");
+                        int temp4 = json_data.getInt("Dongia");
+                        String temp5 = json_data.getString("Anh");
+                        int temp6 = json_data.getInt("MaDM");
+                        sanPhamSearchView = new SanPham(temp2, temp4, temp5, 1, temp, Madm, temp3, "NuocUong");
+                        arrayListSanPhamSearchView.add(sanPhamSearchView);
+                        //end test
+                    }
+
+                    strArrData = dataList.toArray(new String[dataList.size()]);
+
+                    //test DucNguyen
+                    strArrDucNguyen = dataListDucNguyen.toArray(new String[dataListDucNguyen.size()]);
+
+
+                } catch (JSONException e) {
+                    // You to understand what actually error is and handle it appropriately
+                    Toast.makeText(SanPhamActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+        }
+
+    }
+
 
     //End SearchView Component
 }
