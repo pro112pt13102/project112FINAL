@@ -39,6 +39,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
     ArrayList<SanPham> arrayListComVanPhong;
     ArrayList<SanPham> arrayListCafe;
     ArrayList<SanPham> arrayListTraSua;
+    int count=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +53,24 @@ public class LoadingScreenActivity extends AppCompatActivity {
             public void run() {
                 super.run();
                 try {
-                    sleep(0);
+                    sleep(500);
                     while (true){
-                        if (arrayListMonChinh.size()!=0 && arrayListMonAnVat.size()!=0 && arrayListThucUong.size()!=0 &&arrayListComVanPhong.size()!=0&& arrayListCafe.size()!=0 && arrayListTraSua.size()!=0 && arrayListSanPhamSlideShow.size()!=0){
+//                        if (arrayListMonChinh.size()!=0 && arrayListMonAnVat.size()!=0 && arrayListThucUong.size()!=0 &&arrayListComVanPhong.size()!=0&& arrayListCafe.size()!=0 && arrayListTraSua.size()!=0 && arrayListSanPhamSlideShow.size()==6){
+//                            Intent i = new Intent(LoadingScreenActivity.this,
+//                                    TrangChuActivity.class);
+//                            i.putExtra("MonChinh",arrayListMonChinh);
+//                            i.putExtra("MonVat",arrayListMonAnVat);
+//                            i.putExtra("ThucUong",arrayListThucUong);
+//                            i.putExtra("SlideShow",arrayListSanPhamSlideShow);
+//                            i.putExtra("ComVanPhong",arrayListComVanPhong);
+//                            i.putExtra("Cafe",arrayListCafe);
+//                            i.putExtra("TraSua",arrayListTraSua);
+//                            startActivity(i);
+//                            finish();
+////                           Log.d("eee",arrayListSanPhamSlideShow.size()+"");
+//                            break;
+//                        }
+                        if ( arrayListSanPhamSlideShow.size()==6){
                             Intent i = new Intent(LoadingScreenActivity.this,
                                     TrangChuActivity.class);
                             i.putExtra("MonChinh",arrayListMonChinh);
@@ -66,6 +82,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
                             i.putExtra("TraSua",arrayListTraSua);
                             startActivity(i);
                             finish();
+//                           Log.d("eee",arrayListSanPhamSlideShow.size()+"");
                             break;
                         }
                     }
@@ -247,6 +264,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
                                 arrayList.add(monAn);
 
                             }
+                            count ++;
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
@@ -294,6 +312,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
                                 arrayList.add(monAn);
 
                             }
+                            count ++;
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
@@ -312,11 +331,13 @@ public class LoadingScreenActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
     public void loadData(){
-        ThreadLoadMonAn threadLoadMonAn = new ThreadLoadMonAn();
-        threadLoadMonAn.start();
-
-        Thread threadDataThucuong = new ThreadLoadThucUong();
-        threadDataThucuong.start();
+//        ThreadLoadMonAn threadLoadMonAn = new ThreadLoadMonAn();
+//        threadLoadMonAn.start();
+//
+//        Thread threadDataThucuong = new ThreadLoadThucUong();
+//        threadDataThucuong.start();
+        threadLoadData threadLoadData = new threadLoadData();
+        threadLoadData.start();
     }
     public void Animation(){
         new Handler().post(new Runnable() {
@@ -344,5 +365,50 @@ public class LoadingScreenActivity extends AppCompatActivity {
                 changeMarginTopWithanimation1(txt_app_name, 95);
             }
         },1000);
+    }
+    public class threadLoadData extends Thread  {
+        @Override
+        public void run() {
+            super.run();
+            // Load dataMonChinh
+            // Danh sách giảm dần
+            String url="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai&maloai=1&soluong=10";
+            loadDataDoAn(url,arrayListMonChinh);
+            // Load ComVanPhong
+            // Danh sách giảm dần
+            String url1="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai&maloai=3&soluong=10";
+            loadDataDoAn(url1,arrayListComVanPhong);
+            // Load dataMonVat
+            // Danh sách giảm dần
+            String url2="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai&maloai=2&soluong=10";
+            loadDataDoAn(url2,arrayListMonAnVat);
+            // Load dataThucUong
+            // Danh sách giảm dần
+            String url3="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai&maloai=3&soluong=10";
+            loadDataDoUong(url3,arrayListThucUong);
+            // Load dataCafe
+            // Danh sách giảm dần
+            String url4="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai&maloai=2&soluong=10";
+            loadDataDoUong(url4,arrayListCafe);
+            // Load dataTraSua
+            // Danh sách giảm dần
+            String url5="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai&maloai=1&soluong=10";
+            loadDataDoUong(url5,arrayListTraSua);
+            while (true){
+                if(count==6){
+                    //Món ăn
+                    arrayListSanPhamSlideShow.add(arrayListMonChinh.get(0));
+                    arrayListSanPhamSlideShow.add(arrayListMonAnVat.get(0));
+                    arrayListSanPhamSlideShow.add(arrayListComVanPhong.get(0));
+                    // Thức uống
+                    arrayListSanPhamSlideShow.add(arrayListCafe.get(0));
+                    arrayListSanPhamSlideShow.add(arrayListTraSua.get(0));
+                    arrayListSanPhamSlideShow.add(arrayListThucUong.get(0));
+                    break;
+                }
+            }
+        }
+
+
     }
 }
