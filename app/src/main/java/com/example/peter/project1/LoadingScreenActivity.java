@@ -153,22 +153,25 @@ public class LoadingScreenActivity extends AppCompatActivity {
         public void run() {
             super.run();
             // Load dataMonChinh
+            // Danh sách giảm dần
             String url="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai&maloai=1&soluong=10";
             loadDataDoAn(url,arrayListMonChinh);
             // Load ComVanPhong
+            // Danh sách giảm dần
             String url1="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai&maloai=3&soluong=10";
             loadDataDoAn(url1,arrayListComVanPhong);
             // Load dataMonVat
+            // Danh sách giảm dần
             String url2="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai&maloai=2&soluong=10";
             loadDataDoAn(url2,arrayListMonAnVat);
             try {
                 while (true){
 //                    Thread.sleep(1500);
                     if(arrayListMonChinh.size()!=0 && arrayListComVanPhong.size()!=0 && arrayListMonAnVat.size()!=0){
-                        arrayListSanPhamSlideShow.add(arrayListMonChinh.get(arrayListMonChinh.size()-1));
-                        arrayListSanPhamSlideShow.add(arrayListMonAnVat.get(arrayListMonAnVat.size()-1));
-                        arrayListSanPhamSlideShow.add(arrayListComVanPhong.get(arrayListComVanPhong.size()-1));
-                        Log.d("eee",arrayListSanPhamSlideShow.size()+"");
+                        arrayListSanPhamSlideShow.add(arrayListMonChinh.get(0));
+                        arrayListSanPhamSlideShow.add(arrayListMonAnVat.get(0));
+                        arrayListSanPhamSlideShow.add(arrayListComVanPhong.get(0));
+//                        Log.d("eee",arrayListSanPhamSlideShow.size()+"");
 
                         break;
                     }
@@ -184,22 +187,25 @@ public class LoadingScreenActivity extends AppCompatActivity {
         public void run() {
             super.run();
             // Load dataThucUong
+            // Danh sách giảm dần
             String url="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai&maloai=3&soluong=10";
             loadDataDoUong(url,arrayListThucUong);
             // Load dataCafe
+            // Danh sách giảm dần
             String url1="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai&maloai=2&soluong=10";
             loadDataDoUong(url1,arrayListCafe);
             // Load dataTraSua
+            // Danh sách giảm dần
             String url2="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai&maloai=1&soluong=10";
             loadDataDoUong(url2,arrayListTraSua);
             try {
                 while (true){
 //                    Thread.sleep(1500);
                     if(arrayListThucUong.size()!=0 && arrayListCafe.size()!=0 && arrayListTraSua.size()!=0){
-                        arrayListSanPhamSlideShow.add(arrayListCafe.get(arrayListCafe.size()-1));
-                        arrayListSanPhamSlideShow.add(arrayListTraSua.get(arrayListTraSua.size()-1));
-                        arrayListSanPhamSlideShow.add(arrayListThucUong.get(arrayListThucUong.size()-1));
-                        Log.d("eee",arrayListSanPhamSlideShow.size()+"");
+                        arrayListSanPhamSlideShow.add(arrayListCafe.get(0));
+                        arrayListSanPhamSlideShow.add(arrayListTraSua.get(0));
+                        arrayListSanPhamSlideShow.add(arrayListThucUong.get(0));
+//                        Log.d("eee",arrayListSanPhamSlideShow.size()+"");
                         break;
                     }
                 }

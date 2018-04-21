@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.dmoral.toasty.Toasty;
 
@@ -92,7 +93,7 @@ public class ChiTietActivity extends AppCompatActivity {
     public void getData1Sanpham(){
         key=getIntent().getIntExtra("key",1);
         sp= (SanPham) getIntent().getSerializableExtra("SanPham");
-        giaSp.setText(sp.getDongia()+"");
+        giaSp.setText(DinhDangTien(String.valueOf(sp.getDongia())) +" VNĐ");
         tenSp.setText(sp.getTenSanPha());
         tv_noidungxemthem.setText(sp.getGioithieu());
 //        imgHinhSp.setImageResource(sp.getHinh());
@@ -333,5 +334,43 @@ public class ChiTietActivity extends AppCompatActivity {
                     setUpRcHorizontal();
             }
         }
+    }
+    public   String DinhDangTien(String chuoi){
+        String chuoiso="";
+        //khoản ký tự
+        int size=0;
+        // Tạo mảng chứa chuỗi con
+        ArrayList<String> arrChuoi = new ArrayList();
+        // đão ký tự chuổi
+        String chuoidao= new StringBuilder(chuoi).reverse().toString();
+        // định dạng chuỗi
+        if(chuoi.length()>=4){
+            while(true){
+                size+=3;
+                if(chuoi.length()-size<1){
+                    String chuoicuoi="";
+                    if(size-chuoi.length()==2){
+                        chuoicuoi=String.valueOf(chuoidao.charAt(chuoi.length()-1));
+                    }if(size-chuoi.length()==1){
+                        chuoicuoi=String.valueOf(chuoidao.charAt(chuoi.length()-2))+String.valueOf(chuoidao.charAt(chuoi.length()-1));
+                    }if(size-chuoi.length()==0){
+                        chuoicuoi=String.valueOf(chuoidao.charAt(chuoi.length()-3))+String.valueOf(chuoidao.charAt(chuoi.length()-2))+String.valueOf(chuoidao.charAt(chuoi.length()-1));
+                    }
+                    arrChuoi.add(new StringBuilder(chuoicuoi).reverse().toString());
+                    break;
+                }else{
+                    String chuoicon=chuoidao.substring(size-3, size)+".";
+                    arrChuoi.add(new StringBuilder(chuoicon).reverse().toString());
+                }
+
+            }
+        }
+        // Nối chuỗi
+        Collections.reverse(arrChuoi);
+        for(int i=0;i<arrChuoi.size();i++){
+            chuoiso=chuoiso+arrChuoi.get(i);
+
+        }
+        return chuoiso;
     }
 }

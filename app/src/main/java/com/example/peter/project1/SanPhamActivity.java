@@ -185,7 +185,6 @@ public class SanPhamActivity extends AppCompatActivity {
             arrayListSanPham= (ArrayList<SanPham>) getIntent().getSerializableExtra("ComVanPhong");
             Madm=3;
         }
-        Collections.reverse(arrayListSanPham);
         maSPCuoi=arrayListSanPham.get(arrayListSanPham.size()-1).getMaSP();
         maSpDau=arrayListSanPham.get(0).getMaSP();
     }
@@ -551,24 +550,26 @@ public class SanPhamActivity extends AppCompatActivity {
     public void setUrlRequestPullUp(){
         if(title.equalsIgnoreCase("Món chính") || title.equalsIgnoreCase("Món Ăn Vặt")||title.equalsIgnoreCase("Cơm văn phòng")){
 //            String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-co-ma-nho-hon&ma="+maSPCuoi+"&soluong=6";
+            // Danh sách giảm dần
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai-co-ma-nho-hon&maloai="+Madm+"&ma="+maSPCuoi+"&soluong=6";
             PullUploadDataDoAn(url);
         }
-        if(title.equalsIgnoreCase("Các Loại Khác")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")){
+        if(title.equalsIgnoreCase("Các Loại Khác")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")||title.equalsIgnoreCase("Thức uống")){
 //            String url ="https://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-co-ma-nho-hon&ma="+maSPCuoi+"&soluong=6";
+            // Danh sách giảm dần
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai-co-ma-nho-hon&maloai="+Madm+"&ma="+maSPCuoi+"&soluong=6";
-
             PullUploadDataDoUong(url);
         }
     }
     public void setUrlRequestPullDown(){
         if(title.equalsIgnoreCase("Món chính") || title.equalsIgnoreCase("Món Ăn Vặt")||title.equalsIgnoreCase("Cơm văn phòng")){
+            // Danh sách tăng dần
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-mon-an-theo-ma-loai-co-ma-lon-hon&maloai="+Madm+"&ma="+maSpDau+"&soluong=6";
             PullDownloadDataDoAn(url);
         }
-        if(title.equalsIgnoreCase("Các Loại Khác")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")){
+        if(title.equalsIgnoreCase("Các Loại Khác")|| title.equalsIgnoreCase("Trà Sữa")||title.equalsIgnoreCase("Cafe")||title.equalsIgnoreCase("Thức uống")){
+            // Danh sách tăng dần
             String url="http://immense-scrubland-98497.herokuapp.com/app.php?kihieu=danh-sach-thuc-uong-theo-ma-loai-co-ma-lon-hon&maloai="+Madm+"&ma="+maSpDau+"&soluong=6";
-
             PullDownloadDataDoUong(url);
         }
     }
@@ -598,6 +599,7 @@ public class SanPhamActivity extends AppCompatActivity {
                 case 1:
 //                        Add more data
                     if(arrayResponse.get(0).getMaSP()!=-1){
+                        Collections.reverse(arrayResponse);
                         for (int i = 0; i < arrayResponse.size(); i++) {
                             arrayListSanPham.add(i, arrayResponse.get(i));
                         }
