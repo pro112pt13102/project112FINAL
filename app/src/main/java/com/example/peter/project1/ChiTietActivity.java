@@ -127,7 +127,10 @@ public class ChiTietActivity extends AppCompatActivity {
         img_back_chitiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setNumberBadge(arrayList_giohang.size());
+                if(key==3){
+                    setNumberBadge(arrayList_giohang.size());
+                }
+
                 finish();
             }
         });
@@ -135,7 +138,7 @@ public class ChiTietActivity extends AppCompatActivity {
         img_giohang_chi_tiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(key==0 ){
+                if(key==0 || key==3){
                     Addgiohang(sp);
                     //Save gio hang
                     loadGioHang();
