@@ -27,8 +27,11 @@ import com.example.peter.project1.Adapter.adapter_rc_fragment_hoan_tat;
 import com.example.peter.project1.Model.DonHang;
 import com.example.peter.project1.Model.SanPham;
 import com.example.peter.project1.Model.User;
+import com.example.peter.project1.Model.UserData;
 import com.example.peter.project1.R;
 import com.facebook.FacebookSdk;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -53,6 +56,13 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
     ArrayList<SanPham> arrayListGiohang;
     RecyclerView rc_giohang_hoantat;
     User userinfo;
+
+    //DucNguyen Component
+
+    DatabaseReference databaseReference;
+    String idDonHang;
+
+    //end DucNguyen Component
     @SuppressLint("ValidFragment")
     public HoanTatFragment(ArrayList<SanPham> arrayListGiohang) {
         // Required empty public constructor
@@ -93,6 +103,9 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 setDonHang();
+
+                sendDonHangToFirebase(); //Send To Firebase
+
                 Toast.makeText(getContext(), "Đã hoàn tất và gửi giỏ hàng lên sever", Toast.LENGTH_SHORT).show();
                 RemoveArraylistGiohang();
                 SavegioHang();
@@ -173,14 +186,15 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
         String jsonDonHang= new Gson().toJson(donHang);
         // Send Donhang
 //        sendDonHangtoSever(jsonDonHang);
-        Toast.makeText(getContext(), ""+jsonDonHang, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), ""+jsonDonHang, Toast.LENGTH_SHORT).show();
+        Log.d("DucNguyen", jsonDonHang);
     }
     public void sendDonHangtoSever(final String jsonDonHang){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getContext());
         //this is the url where you want to send the request
         //TODO: replace with your own url to send request, as I am using my own localhost for this tutorial
-        String url = "http://192.168.1.2/Severandroid/json.php";
+        String url = "https://app-1510482319.000webhostapp.com/datatoserver/json.php";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -220,6 +234,25 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
             editor.putString("arrayGioHang", json);
             editor.commit();
 
+    }
+
+    //DucNguyen Send DonHang to Firebase
+    public void sendDonHangToFirebase(){
+        try {
+            databaseReference = FirebaseDatabase.getInstance().getReference("donhang");
+
+            idDonHang = databaseReference.push().getKey();
+
+//            DonHang donHang = new DonHang(idDonHang, arrayListGiohang,userinfo,userinfo.getGhichu());
+
+            databaseReference.child(idDonHang).setValue(arrayListGiohang);
+
+            databaseReference.child(idDonHang).child("khachhang").setValue(userinfo);
+
+//            Toast.makeText(getApplicationContext(), "Data Don Hang Added", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e + "", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
