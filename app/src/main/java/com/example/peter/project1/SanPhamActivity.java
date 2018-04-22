@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -824,6 +825,10 @@ public class SanPhamActivity extends AppCompatActivity {
                     return false;
                 }
             });
+
+            //Change Button Search
+            ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_button);
+            searchClose.setImageResource(R.drawable.ic_search_ducnguyen);
         }
 
         return true;
