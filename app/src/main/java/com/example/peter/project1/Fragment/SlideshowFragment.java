@@ -68,9 +68,9 @@ public class SlideshowFragment extends android.support.v4.app.Fragment {
     }
     public void loadhinh(ImageView img ,String hinh){
         Picasso.get()
-                .load("http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh)
-                .centerCrop()
-                .resize(600,400)
+                .load(hinh)
+                .resize(500,300)
+                .error(R.drawable.error404)
                 .into(img);
     }
 }

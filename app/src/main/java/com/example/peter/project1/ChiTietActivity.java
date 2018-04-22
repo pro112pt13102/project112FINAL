@@ -162,17 +162,10 @@ public class ChiTietActivity extends AppCompatActivity {
         Toasty.success(ChiTietActivity.this,msg).show();
     }
     public void loadhinh(ImageView img ,String hinh){
-//        Picasso.get()
-//                .load("http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh)
-//                .centerCrop()
-//                .resize(200,200)
-//                .into(img);
-        String url2="https://firebasestorage.googleapis.com/v0/b/finalloginproject112.appspot.com/o/dogImages%2Fga-tay-nuong.jpg?alt=media&token=437441a5-b248-406d-9a48-7f072e83bd17";//        Picasso.get()
-
-        Picasso.get()
-                .load(url2)
-                .resize(200,200)
-                .error(R.drawable.ic_launcher_background)
+     Picasso.get()
+                .load(hinh)
+                .resize(800,500)
+                .error(R.drawable.error404)
                 .into(img);
     }
     public void setUpRcHorizontal(){

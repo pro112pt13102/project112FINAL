@@ -3,6 +3,7 @@ package com.example.peter.project1.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class adapter_rc_horizontalview extends RecyclerView.Adapter<adapter_rc_h
                 i.putExtra("key",1);
                 startActivity(c,i,null);
                 Toast.makeText(c, ""+arrayList.get(position).getMaSP(), Toast.LENGTH_SHORT).show();
+                Log.d("ccc",arrayList.get(position).getHinh());
             }
         });
         holder.tv_tensp.setText(LongNameWithDot(arrayList.get(position).getTenSanPha()));
@@ -71,21 +73,10 @@ public class adapter_rc_horizontalview extends RecyclerView.Adapter<adapter_rc_h
         }
     }
     public void loadhinh(ImageView img,String hinh){
-        String url1="http://immense-scrubland-98497.herokuapp.com/public/images/"+hinh;
-        String url2="https://firebasestorage.googleapis.com/v0/b/finalloginproject112.appspot.com/o/dogImages%2Fga-tay-nuong.jpg?alt=media&token=437441a5-b248-406d-9a48-7f072e83bd17";//        Picasso.get()
-//                .load(url1)
-//                .centerCrop()
-//                .resize(200,200)
-//                .into(img);
-//        Picasso.get()
-//                .load(url)
-//                .centerCrop()
-//                .resize(200,200)
-//                .into(img);
         Picasso.get()
-                .load(url2)
+                .load(hinh)
                 .resize(200,200)
-                .error(R.drawable.ic_launcher_background)
+                .error(R.drawable.error404)
                 .into(img);
 
     }
