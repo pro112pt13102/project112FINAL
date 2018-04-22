@@ -303,24 +303,67 @@ public class TrangChuActivity extends AppCompatActivity {
         imageViewAvatarGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageViewAvatarGoogle.setImageResource(R.drawable.logo);
-                textViewNameGoogle.setText("Hello");
-
-                //Sign-out
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                // ...
-                                Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
-                                FirebaseAuth.getInstance().signOut();
-                                Intent i=new Intent(getApplicationContext(),LoginActivity.class);
-                                startActivity(i);
-                                finish();
-                            }
-                        });
+//                imageViewAvatarGoogle.setImageResource(R.drawable.logo);
+//                textViewNameGoogle.setText("Hello");
+//
+//                //Sign-out
+//                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+//                        new ResultCallback<Status>() {
+//                            @Override
+//                            public void onResult(Status status) {
+//                                // ...
+//                                Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
+//                                FirebaseAuth.getInstance().signOut();
+//                                Intent i=new Intent(getApplicationContext(),LoginActivity.class);
+//                                startActivity(i);
+//                                finish();
+//                            }
+//                        });
 
 //                FirebaseAuth.getInstance().signOut();
+
+                //Alert Dialog Logout
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(TrangChuActivity.this);
+
+                if (dataNameUser == null){
+                    builder.setTitle("Xin Chào");
+                }else{
+                    builder.setTitle("Xin Chào "+dataNameUser);
+                }
+
+                builder.setMessage("Bạn Có Muốn Đăng Xuất ");
+                builder.setCancelable(false);
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Toast.makeText(TrangChuActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        imageViewAvatarGoogle.setImageResource(R.drawable.logo);
+                        textViewNameGoogle.setText("Guest");
+
+                        //Sign-out
+                        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                                new ResultCallback<Status>() {
+                                    @Override
+                                    public void onResult(Status status) {
+                                        // ...
+                                        Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
+                                        FirebaseAuth.getInstance().signOut();
+                                        Intent i=new Intent(getApplicationContext(),LoginActivity.class);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                });
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
             }
         });
