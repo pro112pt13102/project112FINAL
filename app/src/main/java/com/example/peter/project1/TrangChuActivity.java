@@ -223,6 +223,10 @@ public class TrangChuActivity extends AppCompatActivity {
                         Intent i7 = new Intent(TrangChuActivity.this,LienHeActivity.class);
                         startActivity(i7);
                         break;
+                    case R.id.gioithieu:
+                        Intent i8 = new Intent(TrangChuActivity.this,GioiThieuActivity.class);
+                        startActivity(i8);
+                        break;
                 }
                 return false;
             }

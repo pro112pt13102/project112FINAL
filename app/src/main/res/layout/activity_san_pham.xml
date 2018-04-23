@@ -53,17 +53,17 @@
 
             <com.example.peter.project1.CustomView.Badge
                 android:id="@+id/badge"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="260dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="265dp"
                 app:layout_constraintStart_toStartOf="@+id/txt_loai"
                 app:layout_constraintTop_toTopOf="parent"></com.example.peter.project1.CustomView.Badge>
             <ImageButton
                 android:id="@+id/img_btn_giohang"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="13dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/ic_giohang"
                 app:layout_constraintBottom_toBottomOf="parent"

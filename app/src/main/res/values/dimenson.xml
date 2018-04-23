@@ -3,7 +3,7 @@
     <dimen name="mgTimgV">150dp</dimen>
     <dimen name="sizechu">15sp</dimen>
     <dimen name="mgTbtnLogin">40dp</dimen>
-    <dimen name="sizeMrFood">22sp</dimen>
+    <dimen name="sizeMrFood">20sp</dimen>
     <dimen name="mgLxemtatca">185dp</dimen>
     <dimen name="mgLxemthem">240dp</dimen>
     <dimen name="sizexemthem">18sp</dimen>
