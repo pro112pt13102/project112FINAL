@@ -37,7 +37,7 @@
 
         <com.andreabaccega.widget.FormEditText
             app:emptyErrorString="@string/emptyErrorString"
-            app:testType="alpha"
+            app:testType="nocheck"
             app:testErrorString="Gồm số nhà và tên đượng"
             android:id="@+id/et_diachi_thongtin"
             android:layout_width="350dp"
