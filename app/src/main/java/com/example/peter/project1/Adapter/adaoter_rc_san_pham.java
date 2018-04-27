@@ -140,7 +140,7 @@ public class adaoter_rc_san_pham extends RecyclerView.Adapter<RecyclerView.ViewH
                     i.putExtra("SanPham",sp);
                     i.putExtra("key",3);
                     startActivity(activity.getApplicationContext(),i,null);
-                    Toast.makeText(activity.getApplicationContext(), ""+sp.getMaSP(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(activity.getApplicationContext(), ""+sp.getMaSP(), Toast.LENGTH_SHORT).show();
                     Log.d("ccc",arrayList.get(position).getHinh());
 
                 }

@@ -276,7 +276,7 @@ public class TrangChuActivity extends AppCompatActivity {
                     .build();
             mGoogleApiClient.connect();
         } catch (Exception e) {
-            Toast.makeText(this, e+"", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, e+"", Toast.LENGTH_SHORT).show();
         }
 
         //---------------------------------
@@ -356,7 +356,7 @@ public class TrangChuActivity extends AppCompatActivity {
                                     @Override
                                     public void onResult(Status status) {
                                         // ...
-                                        Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
                                         FirebaseAuth.getInstance().signOut();
                                         Intent i=new Intent(getApplicationContext(),LoginActivity.class);
                                         startActivity(i);
@@ -457,7 +457,7 @@ public class TrangChuActivity extends AppCompatActivity {
 
                     databaseReference.child(dataIdUser).setValue(user);
 
-                    Toast.makeText(getApplicationContext(), "Data User Added", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Data User Added", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e + "", Toast.LENGTH_SHORT).show();
                 }

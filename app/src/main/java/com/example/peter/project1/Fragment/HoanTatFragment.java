@@ -106,7 +106,7 @@ public class HoanTatFragment extends android.support.v4.app.Fragment {
 
                 sendDonHangToFirebase(); //Send To Firebase
 
-                Toast.makeText(getContext(), "Đã hoàn tất và gửi giỏ hàng lên sever", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Cảm ơn quý khách đã đặt hàng", Toast.LENGTH_SHORT).show();
                 RemoveArraylistGiohang();
                 SavegioHang();
                 getActivity().finish();

@@ -992,8 +992,8 @@ public class SanPhamActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     // You to understand what actually error is and handle it appropriately
-                    Toast.makeText(SanPhamActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(SanPhamActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -1136,8 +1136,8 @@ public class SanPhamActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     // You to understand what actually error is and handle it appropriately
-                    Toast.makeText(SanPhamActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                    Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(SanPhamActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG).show();
                 }
 
             }

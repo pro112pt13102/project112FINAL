@@ -175,7 +175,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //Toast.makeText(this, "xx", Toast.LENGTH_SHORT).show();
         if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(this, "Đã xin quyền", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Đã xin quyền", Toast.LENGTH_SHORT).show();
             initmap();              //Khởi tạo map
             xulyGPS();              //Lấy vị trí người dụng hiện tại
         }

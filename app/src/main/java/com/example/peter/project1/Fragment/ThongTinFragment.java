@@ -273,7 +273,7 @@ public class ThongTinFragment extends android.support.v4.app.Fragment {
 
                         databaseReference.setValue(user);
 
-                        Toast.makeText(getContext(), "Data User Updated", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "Data User Updated", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
 //                    Toast.makeText(getApplicationContext(), e + "", Toast.LENGTH_SHORT).show();

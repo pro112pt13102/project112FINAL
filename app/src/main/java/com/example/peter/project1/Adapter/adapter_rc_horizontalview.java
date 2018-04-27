@@ -49,7 +49,7 @@ public class adapter_rc_horizontalview extends RecyclerView.Adapter<adapter_rc_h
                 i.putExtra("SanPham",arrayList.get(position));
                 i.putExtra("key",1);
                 startActivity(c,i,null);
-                Toast.makeText(c, ""+arrayList.get(position).getMaSP(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(c, ""+arrayList.get(position).getMaSP(), Toast.LENGTH_SHORT).show();
                 Log.d("ccc",arrayList.get(position).getHinh());
             }
         });
